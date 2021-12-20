@@ -1,42 +1,4 @@
 <!DOCTYPE html>
-<!--
-    .dataTables_wrapper table thead{
-        display:none;
-    }
-    
-    $('#example').DataTable({
-        columns: [{
-            title: "display",
-            data: "display",
-            className: "dataTablesDisplayCol",
-            render: (data, type, row, meta) => {
-                if ( type === 'display' ) {
-                    return data;
-                }
-                if ( type === 'filter' ) {
-                    return data;
-                }
-            }
-        }],
-        createdRow: (row,data,index) => $(row).addClass('dataTablesRow'),
-        sDom: 'ltpi'
-    });
-
-    $('#example').on('click', '.dataTablesRow', function() {
-        let table = $('#example').DataTable();
-        let row = table.row(this);
-        if (row.child.isShown()) {
-            row.child.hide();
-            $(this).removeClass('shown');
-        } else {
-            let cells = table.cells(row, '.expandedInfo').render('display');
-            row.child( generateHTLMforChild(), 'dataTableChild').show();
-            $(this).next().addClass($(this).hasClass('even') ? 'even' : 'odd');
-            $(this).addClass('shown');
-        }
-    });
-    
--->
 <html class="" lang="en-US">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -68,6 +30,13 @@
         <link rel="icon" href="https://d3futrf33lk36a.cloudfront.net/wp-content/uploads/sites/240/2017/08/cropped-uw-crest-web-32x32.png" sizes="32x32">
         <link rel="icon" href="https://d3futrf33lk36a.cloudfront.net/wp-content/uploads/sites/240/2017/08/cropped-uw-crest-web-192x192.png" sizes="192x192">
         <link rel="apple-touch-icon" href="https://d3futrf33lk36a.cloudfront.net/wp-content/uploads/sites/240/2017/08/cropped-uw-crest-web-180x180.png">
+        
+        
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css" media="all">
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+        <script src="site.js"></script>
+        
         <meta name="msapplication-TileImage" content="https://d3futrf33lk36a.cloudfront.net/wp-content/uploads/sites/240/2017/08/cropped-uw-crest-web-270x270.png">
         <meta class="foundation-mq">
     </head>
@@ -386,8 +355,7 @@
                                         <p>This includes select preprints. Older publication reports can be found <a href="https://ctri.wisc.edu/researchers/publications/publications-by-author/">here</a> and <a href="https://ctri.wisc.edu/researchers/publications/">here</a>.</p>
                                     </div>
                                     <div class="uw-pe uw-pe-accordion_panel">
-                                        Placeholder
-                                        <br><br><br><br><br><br><br><br><br>
+                                        <table id="mainDataTable"></table>
                                     </div>
                                 </div>
                             </div>
