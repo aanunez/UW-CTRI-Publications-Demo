@@ -64,6 +64,11 @@ let ctri = {
                 $rowEl.addClass('shown');
             }
         });
+        
+        $(window).on('resize', () => {
+            $(".expandButton").css('transform',`translate(-40px,${$(".dataTablesRow").first().height()-33}px)`)
+        });
+        $(window).resize();
     },
     
     generateData: () => {
