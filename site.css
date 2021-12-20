@@ -3,30 +3,66 @@
 }
 
 #mainDataTable {
-    width: 100%;
+    width: 100%!important;
 }
 
 .dataTablesRow {
 
 }
 
+.dataTablesRow .container, .dataTableChild  .container {
+    padding-left: 1em;
+    font-family: "Verlag";
+}
+
 .dataTablesDisplayCol{
 
 }
 
-.dataTables_paginate  {
-    background-color: #f7f7f7;
+.dataTables_paginate a {
+    text-decoration: none!important;
+    font-family: "Verlag";
 }
 
 .dataTables_filter {
     float: right;
 }
 
-.paginate_button {
-    padding-left: 0;
-    padding-right: 0;
+.dataTables_filter input {
+    width: 250px!important;
+}
+
+.dataTables_filter input{
+    margin-bottom: 0;
 }
 
 .page-link {
-    margin-bottom: 0;
+    margin: 0;
+}
+
+.page-item.active .page-link {
+    background-color: #c5050c;
+    border-color: #c5050c;
+}
+
+.paginate_button.previous, .paginate_button.next {
+    padding: 0;
+}
+
+.row-title {
+    font-size: 1.75em;
+}
+
+.expandButton {
+    position: absolute;
+    width: 1.5em;
+    transform: translate(-40px,90px);
+    background-color: gray;
+    border-radius: 100%;
+    height: 1.5em;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.2;
+    cursor: pointer;
 }
