@@ -1,0 +1,32 @@
+.dataTable  thead{
+    display:none;
+}
+
+#mainDataTable {
+    width: 100%;
+}
+
+.dataTablesRow {
+
+}
+
+.dataTablesDisplayCol{
+
+}
+
+.dataTables_paginate  {
+    background-color: #f7f7f7;
+}
+
+.dataTables_filter {
+    float: right;
+}
+
+.paginate_button {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.page-link {
+    margin-bottom: 0;
+}
