@@ -50,18 +50,19 @@ let ctri = {
         $("input.form-control").prop('placeholder','Search journal entries');
         $(".dataTablesRow").append(ctri.generateExpandButton());
 
-        $('.expandButton').on('click', (e) => {
-            let $rowEl = $(e.currentTarget).parent();
+        $('#mainDataTable tbody').on('click', '.expandButton', (e) => {
+            let $tr = $(e.currentTarget).parent();
             let table = $('#mainDataTable').DataTable();
-            let row = table.row($rowEl);
+            let row = table.row($tr);
             if (row.child.isShown()) {
-                row.child.hide();
-                $rowEl.removeClass('shown');
+                $('div.slider', row.child()).slideUp( () => {
+                    row.child.hide();
+                    $tr.removeClass('shown');
+                });
             } else {
-                let cells = table.cells(row, '.expandedInfo').render('display');
                 row.child( ctri.generateHTMLforChild(), 'dataTableChild').show();
-                $rowEl.next().addClass($rowEl.hasClass('even') ? 'even' : 'odd');
-                $rowEl.addClass('shown');
+                $tr.addClass('shown');
+                $('div.slider', row.child()).slideDown();
             }
         });
         
@@ -114,7 +115,11 @@ let ctri = {
     },
 
     generateHTMLforChild: () => {
-        return `<div class="container">Placeholder</div>`;
+        return `<div class="container slider">
+        Cofresí RU, Hajcak G, Piasecki TM, Bartholow BD. Internal Consistency and Test-Retest Reliability of the P3 Event-Related Potential (ERP) Elicited by Alcoholic and Non-Alcoholic Beverage Pictures. Psychophysiology. Online November 15, 2021.
+        Cofresí RU, Hajcak G, Piasecki TM, Bartholow BD. Internal Consistency and Test-Retest Reliability of the P3 Event-Related Potential (ERP) Elicited by Alcoholic and Non-Alcoholic Beverage Pictures. Psychophysiology. Online November 15, 2021.
+        Cofresí RU, Hajcak G, Piasecki TM, Bartholow BD. Internal Consistency and Test-Retest Reliability of the P3 Event-Related Potential (ERP) Elicited by Alcoholic and Non-Alcoholic Beverage Pictures. Psychophysiology. Online November 15, 2021.
+        </div>`;
     },
     
     generateExpandButton: () => {
