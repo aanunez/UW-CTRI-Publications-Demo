@@ -1,3 +1,7 @@
+@import "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css";
+@import "https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css";
+
 .dataTable  thead{
     display:none;
 }
@@ -27,6 +31,33 @@
 .dataTables_paginate a {
     text-decoration: none!important;
     font-family: "Verlag";
+}
+
+.dataTablesCustom_sort {
+    width: 220px;
+    float: right;
+    box-sizing: border-box;
+    min-height: calc(1.5em + (.5rem + 2px));
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    border-radius: .2rem;
+    border: 1px solid #ced4da;
+    margin: 0 0.25em 0 0.5em;
+}
+
+.dataTablesCustom_sort option[value=""] {
+    color: #6c757d;
+}
+
+.dataTablesCustom_order {
+    float: right;
+    height: 40px;
+    width: 30px;
+    color: #dddddd;
+}
+
+.dataTablesCustom_order:hover {
+    color: #c5050c;
 }
 
 .dataTables_filter {
