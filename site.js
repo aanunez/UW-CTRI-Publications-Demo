@@ -4,6 +4,11 @@ let ctri = {
         {
             title: "A long paper title here that just keeps going",
             journal: "Some Fake Fancy Soudning Journal with a long name",
+            topic: "",
+            date: "2021-03-0",
+            pages: "1444-1499",
+            volume: "31",
+            issue: "14",
             author: [
                 ['first','middle','last'],
                 ['first','middle','last'],
@@ -24,11 +29,60 @@ let ctri = {
             ],
             link_text: 'Full text',
             link: "#"
+        },
+        {
+            title: "A long paper title here that just keeps going",
+            journal: "Some Fake Fancy Soudning Journal with a long name",
+            author: [
+                ['first','middle','last'],
+                ['first','middle','last'],
+                ['first','middle','last'],
+                "Baker TM"
+            ],
+            link_text: 'Full text',
+            link: ""
+        },
+        {
+            title: "A long paper title here that just keeps going",
+            journal: "Some Fake Fancy Soudning Journal with a long name",
+            author: [
+                ['first','middle','last'],
+                ['first','middle','last'],
+                ['first','middle','last'],
+                "Baker TM"
+            ],
+            link_text: 'Full text',
+            link: ""
+        },
+        {
+            title: "A long paper title here that just keeps going",
+            journal: "Some Fake Fancy Soudning Journal with a long name",
+            author: [
+                ['first','middle','last'],
+                ['first','middle','last'],
+                ['first','middle','last'],
+                "Baker TM"
+            ],
+            link_text: 'Full text',
+            link: ""
+        },
+        {
+            title: "A long paper title here that just keeps going",
+            journal: "Some Fake Fancy Soudning Journal with a long name",
+            author: [
+                ['first','middle','last'],
+                ['first','middle','last'],
+                ['first','middle','last'],
+                "Baker TM"
+            ],
+            link_text: 'Full text',
+            link: ""
         }
     ],
 
     init: () => {
         
+        // Setup Talbe
         $('#mainDataTable').DataTable({
             columns: [{
                 title: "display",
@@ -47,9 +101,11 @@ let ctri = {
             }
         });
         
+        // Set place holder on search 
         $("input.form-control").prop('placeholder','Search journal entries');
+        
+        // Setup expand buttons
         $(".dataTablesRow").append(ctri.generateExpandButton());
-
         $('#mainDataTable tbody').on('click', '.expandButton', (e) => {
             let $tr = $(e.currentTarget).parent();
             let table = $('#mainDataTable').DataTable();
@@ -66,6 +122,7 @@ let ctri = {
             }
         });
         
+        // On resize we need to be sure the expand buttons don't drift
         $(window).on('resize', () => {
             $(".expandButton").css('transform',`translate(-40px,${$(".dataTablesRow").first().height()-33}px)`)
         });
