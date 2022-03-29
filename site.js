@@ -3,42 +3,7 @@ let ctri = {
     disabledTextColor: '#6c757d',
     order: 'asc',
     
-    data: [
-        {
-            title: "A long paper title here that just keeps going",
-            journal: "Some Fake Fancy Sounding Journal with a long name",
-            topic: "",
-            date: "2021-03-0",
-            pages: "1444-1499",
-            volume: "31",
-            issue: "14",
-            author: [
-                ['first','middle','last'],
-                ['first','middle','last'],
-                ['first','middle','last'],
-                "Baker TM"
-            ],
-            link_text: 'Full text',
-            link: ""
-        },
-        {
-            title: "A Different Paper title that is still too long, I mean whats the deal with that?",
-            journal: "Fake Journal",
-            topic: "",
-            date: "2021-03-0",
-            pages: "1444-1499",
-            volume: "31",
-            issue: "14",
-            author: [
-                ['first','middle','last'],
-                ['first','middle','last'],
-                ['first','middle','last'],
-                "Baker TM"
-            ],
-            link_text: 'Full text',
-            link: ""
-        }
-    ],
+    //data: [  ], Loaded in pubList.js
     
     dataCols: [
         {
