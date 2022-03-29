@@ -81,7 +81,9 @@
     border-color: #c5050c;
 }
 
-.paginate_button.previous, .paginate_button.next {
+.paginate_button.previous, 
+.paginate_button.next, 
+.pagination .disabled{
     padding: 0;
 }
 

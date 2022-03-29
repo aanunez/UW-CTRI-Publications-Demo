@@ -83,7 +83,7 @@ let ctri = {
                 $('div.slider', row.child()).slideDown();
             }
         });
-		$('#mainDataTable tbody').on('click', '.pagination .page-link', (e) => {
+		$('#mainDataTable tbody').on('click', '.pagination .paginate_button', (e) => {
             $(".dataTablesRow").append(ctri.generateExpandButton());
 			$(window).resize();
         });
