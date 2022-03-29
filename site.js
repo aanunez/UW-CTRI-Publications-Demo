@@ -85,8 +85,8 @@ let ctri = {
         });
 		$('#mainDataTable tbody').on('click', '.pagination .page-link', (e) => {
             $(".dataTablesRow").append(ctri.generateExpandButton());
+			$(window).resize();
         });
-		
         
         // On resize we need to be sure the expand buttons don't drift
         $(window).on('resize', () => {
@@ -122,8 +122,9 @@ let ctri = {
         ctri.data.forEach( (el) => {
             let authors = [];
             el.author.forEach( (el) => {
-                authors.push(typeof el == "string" ? el : (el[2]||"")+" "+(el[0][0]||"")+(el[1][0]||""));
+                authors.push(typeof el == "string" ? el : trim((trim(el)[2]||"")+" "+(trim(el[0][0])||"")+(trim(el[1][0])||"")));
             });
+			authors = authors.filter(n=>n);
             let link = el.link ? `<a href="${el.link}">[${el.link_text||ctri.defaultLinkText}]</a>` : "";
             data.push($.extend({
                 'display': `

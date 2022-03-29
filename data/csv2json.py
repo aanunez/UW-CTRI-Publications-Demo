@@ -3,7 +3,7 @@ import json
 
 excel_coding_format = 'ISO-8859-1'
 csv_file = "pubList.csv"
-out_file = "pubList.json"
+out_file = "pubList.js"
 prefix_for_js = "ctri.data = "
 data = []
 
