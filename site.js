@@ -2,7 +2,7 @@ let ctri = {
 
     disabledTextColor: '#6c757d',
     order: 'asc',
-	default_link_text: 
+	default_link_text: "Full Text"
     
     //data: [  ], Loaded in pubList.js
     
@@ -83,6 +83,10 @@ let ctri = {
                 $('div.slider', row.child()).slideDown();
             }
         });
+		$('#mainDataTable tbody').on('click', '.pagination .page-link', (e) => {
+            $(".dataTablesRow").append(ctri.generateExpandButton());
+        });
+		
         
         // On resize we need to be sure the expand buttons don't drift
         $(window).on('resize', () => {
