@@ -2,7 +2,7 @@ let ctri = {
 
     disabledTextColor: '#6c757d',
     order: 'asc',
-	default_link_text: "Full Text",
+	default_link_text: "Full Text"
     
     //data: [  ], Loaded in pubList.js
     
