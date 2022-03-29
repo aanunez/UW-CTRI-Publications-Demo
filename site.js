@@ -2,7 +2,7 @@ let ctri = {
 
     disabledTextColor: '#6c757d',
     order: 'asc',
-	default_link_text: "Full Text",
+	defaultLinkText: "Full Text",
     
     //data: [  ], Loaded in pubList.js
     
@@ -124,7 +124,7 @@ let ctri = {
             el.author.forEach( (el) => {
                 authors.push(typeof el == "string" ? el : (el[2]||"")+" "+(el[0][0]||"")+(el[1][0]||""));
             });
-            let link = el.link ? `<a href="${el.link}">[${el.link_text||default_link_text}]</a>` : "";
+            let link = el.link ? `<a href="${el.link}">[${el.link_text||ctri.defaultLinkText}]</a>` : "";
             data.push($.extend({
                 'display': `
                     <div class="container">
