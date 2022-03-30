@@ -76,14 +76,11 @@ let ctri = {
             let table = $('#mainDataTable').DataTable();
             let row = table.row($tr);
             if (row.child.isShown()) {
-                $('div.slider', row.child()).slideUp( () => {
-                    row.child.hide();
-                    $tr.removeClass('shown');
-                });
+				row.child.hide();
+				$tr.removeClass('shown');
             } else {
                 row.child( ctri.generateHTMLforChild(row.data()), 'dataTableChild').show();
                 $tr.addClass('shown');
-                $('div.slider', row.child()).slideDown();
             }
         });
         
