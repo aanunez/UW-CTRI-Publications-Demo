@@ -164,6 +164,7 @@ let ctri = {
 		data.author.forEach( (el) => {
 			authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim());
 		});
+		authors = authors.filter(n=>n);
 		let date = "";
 		let year = "";
 		if( data.date ) {
