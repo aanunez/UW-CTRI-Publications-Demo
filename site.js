@@ -57,6 +57,10 @@ let ctri = {
             data: ctri.generateData(),
             createdRow: (row,data,index) => $(row).addClass('dataTablesRow'),
             sDom: 'ftpi',
+			drawCallback: () => {
+				$(".dataTablesRow").append(ctri.generateExpandButton());
+				$(window).resize();
+			},
             language: {
                 "zeroRecords": "No matching journal entries",
                 "search": ""
@@ -67,7 +71,6 @@ let ctri = {
         $("input.form-control").prop('placeholder','Search journal entries');
         
         // Setup expand buttons
-        $(".dataTablesRow").append(ctri.generateExpandButton());
         $('#mainDataTable tbody').on('click', '.expandButton', (e) => {
             let $tr = $(e.currentTarget).parent();
             let table = $('#mainDataTable').DataTable();
@@ -82,10 +85,6 @@ let ctri = {
                 $tr.addClass('shown');
                 $('div.slider', row.child()).slideDown();
             }
-        });
-		$('body').on('click', '.pagination .paginate_button', (e) => {
-            $(".dataTablesRow").append(ctri.generateExpandButton());
-			$(window).resize();
         });
         
         // On resize we need to be sure the expand buttons don't drift
