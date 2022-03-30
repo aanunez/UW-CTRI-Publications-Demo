@@ -180,14 +180,26 @@ let ctri = {
 		let page = data.page ? `: ${data.page}.` : ".";
 		let issue = data.issue ? `No. ${data.issue}` : "";
 		let topic = data.topic ? `${data.topic}. ` : "";
-		let display = ""
+		let apa = ""
 		if ( journal ) {
-			display = `${authors.join(', ')} ${year} ${data.title}.${journal}${volume}${issue}${page}`;
+			apa = `${authors.join(', ')} ${year} ${data.title}.${journal}${volume}${issue}${page}`;
 		} else {
 			// Non Journal, online should have full date
-			display = `${authors.join(', ')}.${data.title}.${topic}Online ${date}.`;
+			apa = `${authors.join(', ')}.${data.title}.${topic}Online ${date}.`;
 		}
-        return display.trim().replaceAll("  "," ").replaceAll(". .",".").replaceAll(", .",".");
+        apa = apa.trim().replaceAll("  "," ").replaceAll(". .",".").replaceAll(", .",".");
+		
+		let body = `
+		<b>Authors:</b> ${authors.join(', ')}
+		<b>Paper Title:</b> ${data.title}
+		<b>Topic:</b> ${data.topic}
+		<b>Journal:</b> ${data.journal||"N/A"}
+		<b>Volume:</b> ${data.volume||"N/A"}
+		<b>Issue:</b> ${data.issue||"N/A"}
+		<b>Pages:</b> ${data.page||"N/A"}
+		<b>APA:</b> 
+		${apa}
+		`;
     },
     
     generateExpandButton: () => {
