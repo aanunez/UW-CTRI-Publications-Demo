@@ -178,7 +178,7 @@ let ctri = {
 		let journal = data.journal ? `${data.journal}. ` : "";
 		let volume = data.volume ? `Vol. ${data.volume}, ` : "";
 		let page = data.page ? `: ${data.page}.` : ".";
-		let issue = data.issue ? `No. ${issue}` : "";
+		let issue = data.issue ? `No. ${data.issue}` : "";
 		let topic = data.topic ? `${data.topic}. ` : "";
 		let display = ""
 		if ( journal ) {
