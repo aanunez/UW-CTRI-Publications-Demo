@@ -58,7 +58,9 @@ let ctri = {
             createdRow: (row,data,index) => $(row).addClass('dataTablesRow'),
             sDom: 'ftpi',
 			drawCallback: () => {
-				$(".dataTablesRow").append(ctri.generateExpandButton());
+				if ( !$(".expandButton").length ) {
+					$(".dataTablesRow").append(ctri.generateExpandButton());
+				}
 				$(window).resize();
 			},
             language: {
