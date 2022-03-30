@@ -186,7 +186,7 @@ let ctri = {
 			// Non Journal, online should have full date
 			display = `${authors.join(', ')}.${data.title}.${topic}Online ${date}.`;
 		}
-        return display.trim().replaceAll("  "," ").replaceAll(". .".".").replaceAll(", .",".");
+        return display.trim().replaceAll("  "," ").replaceAll(". .",".").replaceAll(", .",".");
     },
     
     generateExpandButton: () => {
