@@ -160,7 +160,10 @@ let ctri = {
     },
 
     generateHTMLforChild: (data) => {
-		let authors = "";
+		let authors = [];
+		data.author.forEach( (el) => {
+			authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim());
+		});
 		let date = "";
 		let year = "";
 		if( data.date ) {
@@ -178,12 +181,12 @@ let ctri = {
 		let topic = data.topic ? `${data.topic}. ` : "";
 		let display = ""
 		if ( journal ) {
-			display = `${authors} ${year} ${data.title}.${journal}${volume}${issue}${page}`;
+			display = `${authors.join(', ')} ${year} ${data.title}.${journal}${volume}${issue}${page}`;
 		} else {
 			// Non Journal, online should have full date
-			display = `${authors}.${data.title}.${topic}Online ${date}.`;
+			display = `${authors.join(', ')}.${data.title}.${topic}Online ${date}.`;
 		}
-        return display.trim().replaceAll("  "," ");
+        return display.trim().replaceAll("  "," ").replaceAll(". .".".").replaceAll(", .",".");
     },
     
     generateExpandButton: () => {
