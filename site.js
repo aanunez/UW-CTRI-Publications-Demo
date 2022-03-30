@@ -189,7 +189,7 @@ let ctri = {
 		}
         apa = apa.trim().replaceAll("  "," ").replaceAll(". .",".").replaceAll(", .",".");
 		
-		let body = `
+		return `
 		<b>Authors:</b> ${authors.join(', ')}
 		<b>Paper Title:</b> ${data.title}
 		<b>Topic:</b> ${data.topic}
