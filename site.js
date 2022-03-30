@@ -190,14 +190,14 @@ let ctri = {
         apa = apa.trim().replaceAll("  "," ").replaceAll(". .",".").replaceAll(", .",".");
 		
 		return `
-		<b>Authors:</b> ${authors.join(', ')}
-		<b>Paper Title:</b> ${data.title}
-		<b>Topic:</b> ${data.topic}
-		<b>Journal:</b> ${data.journal||"N/A"}
-		<b>Volume:</b> ${data.volume||"N/A"}
-		<b>Issue:</b> ${data.issue||"N/A"}
-		<b>Pages:</b> ${data.page||"N/A"}
-		<b>APA:</b> 
+		<b>Authors:</b> ${authors.join(', ')}<br>
+		<b>Paper Title:</b> ${data.title}<br>
+		<b>Topic:</b> ${data.topic}<br>
+		<b>Journal:</b> ${data.journal||"N/A"}<br>
+		<b>Volume:</b> ${data.volume||"N/A"}<br>
+		<b>Issue:</b> ${data.issue||"N/A"}<br>
+		<b>Pages:</b> ${data.page||"N/A"}<br>
+		<b>APA:</b><br>
 		${apa}
 		`;
     },
