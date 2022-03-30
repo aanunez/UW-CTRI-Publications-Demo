@@ -81,7 +81,7 @@ let ctri = {
                     $tr.removeClass('shown');
                 });
             } else {
-                row.child( ctri.generateHTMLforChild(), 'dataTableChild').show();
+                row.child( ctri.generateHTMLforChild(row.data()), 'dataTableChild').show();
                 $tr.addClass('shown');
                 $('div.slider', row.child()).slideDown();
             }
@@ -158,13 +158,33 @@ let ctri = {
         });
         return data;
     },
+Schrand J.R., Fiore M.C. (2004) Tobacco Control? Fiore Responds.American Journal of Public Health, Vol. 94, No. 9: 1475 – 1476. [Full text]
 
-    generateHTMLforChild: () => {
-        return `<div class="container slider">
-        Cofresí RU, Hajcak G, Piasecki TM, Bartholow BD. Internal Consistency and Test-Retest Reliability of the P3 Event-Related Potential (ERP) Elicited by Alcoholic and Non-Alcoholic Beverage Pictures. Psychophysiology. Online November 15, 2021.
-        Cofresí RU, Hajcak G, Piasecki TM, Bartholow BD. Internal Consistency and Test-Retest Reliability of the P3 Event-Related Potential (ERP) Elicited by Alcoholic and Non-Alcoholic Beverage Pictures. Psychophysiology. Online November 15, 2021.
-        Cofresí RU, Hajcak G, Piasecki TM, Bartholow BD. Internal Consistency and Test-Retest Reliability of the P3 Event-Related Potential (ERP) Elicited by Alcoholic and Non-Alcoholic Beverage Pictures. Psychophysiology. Online November 15, 2021.
-        </div>`;
+    generateHTMLforChild: (data) => {
+		let authors = "";
+		let date = "";
+		let year = "";
+		if( data.date ) {
+			let [m,d,y] = data.date.split('/');
+			year = y;
+			let tmp = new Date(`${y}-${m}-${d}`);
+			date = tmp.toLocaleString('default', { year:'numeric', month: 'long', day:"numeric" });
+			date = m == "1" && d == "1" ? "" : date;
+		}		
+		year = year ? `(${year})` : "";
+		let journal = data.journal ? `${data.journal}. ` : "";
+		let volume = data.volume ? `Vol. ${data.volume}, ` : "";
+		let page = data.page ? `: ${data.page}.` : ".";
+		let issue = data.issue ? `No. ${issue}` : "";
+		let topic = data.topic ? `${data.topic}. ` : "";
+		let display = ""
+		if ( journal ) {
+			display = `${authors} ${year} ${data.title}.${journal}${volume}${issue}${page}`;
+		} else {
+			// Non Journal, online should have full date
+			display = `${authors}.${data.title}.${topic}Online ${date}.`;
+		}
+        return display.trim().replaceAll("  "," ");
     },
     
     generateExpandButton: () => {
