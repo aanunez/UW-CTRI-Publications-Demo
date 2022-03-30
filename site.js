@@ -158,7 +158,6 @@ let ctri = {
         });
         return data;
     },
-Schrand J.R., Fiore M.C. (2004) Tobacco Control? Fiore Responds.American Journal of Public Health, Vol. 94, No. 9: 1475 – 1476. [Full text]
 
     generateHTMLforChild: (data) => {
 		let authors = "";
