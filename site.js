@@ -174,7 +174,7 @@ let ctri = {
 			date = m == "1" && d == "1" ? "" : date;
 		}		
 		year = year ? `(${year})` : "";
-		let journal = data.journal ? `${data.journal}. ` : "";
+		let journal = data.journal ? ` ${data.journal}. ` : "";
 		let volume = data.volume ? `Vol. ${data.volume}, ` : "";
 		let page = data.page ? `: ${data.page}.` : ".";
 		let issue = data.issue ? `No. ${data.issue}` : "";
