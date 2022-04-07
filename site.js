@@ -219,5 +219,7 @@ let ctri = {
             <select class="dataTablesCustom_sort">${html}</select>`;
     }
 };
-
+if ( typeof $ === "undefined" ) {
+    window.jQuery = window.$ = jQuery;
+}
 $(document).ready(ctri.init);
