@@ -12,7 +12,7 @@ let ctri = {
             data: "display",
             className: "dataTablesDisplayCol",
             render: (data, type, row, meta) => {
-                return type === 'filter' ? $(data).text() : data;
+                return type === 'filter' ? jQuery(data).text() : data;
             },
             visible: true
         },
@@ -52,16 +52,16 @@ let ctri = {
     init: () => {
         
         // Setup Talbe
-        $('#mainDataTable').DataTable({
+        jQuery('#mainDataTable').DataTable({
             columns: ctri.dataCols,
             data: ctri.generateData(),
-            createdRow: (row,data,index) => $(row).addClass('dataTablesRow'),
+            createdRow: (row,data,index) => jQuery(row).addClass('dataTablesRow'),
             sDom: 'ftpi',
 			drawCallback: () => {
-				if ( !$(".expandButton").length ) {
-					$(".dataTablesRow").append(ctri.generateExpandButton());
+				if ( !jQuery(".expandButton").length ) {
+					jQuery(".dataTablesRow").append(ctri.generateExpandButton());
 				}
-				$(window).resize();
+				jQuery(window).resize();
 			},
             language: {
                 "zeroRecords": "No matching journal entries",
@@ -70,49 +70,49 @@ let ctri = {
         });
         
         // Set place holder on search 
-        $("input.form-control").prop('placeholder','Search journal entries');
+        jQuery("input.form-control").prop('placeholder','Search journal entries');
         
         // Setup expand buttons
-        $('#mainDataTable tbody').on('click', '.expandButton', (e) => {
-            let $tr = $(e.currentTarget).parent();
-            let table = $('#mainDataTable').DataTable();
-            let row = table.row($tr);
+        jQuery('#mainDataTable tbody').on('click', '.expandButton', (e) => {
+            let jQuerytr = jQuery(e.currentTarget).parent();
+            let table = jQuery('#mainDataTable').DataTable();
+            let row = table.row(jQuerytr);
             if (row.child.isShown()) {
 				row.child.hide();
-				$tr.removeClass('shown');
+				jQuerytr.removeClass('shown');
             } else {
                 row.child( ctri.generateHTMLforChild(row.data()), 'dataTableChild').show();
-                $tr.addClass('shown');
+                jQuerytr.addClass('shown');
             }
         });
         
         // On resize we need to be sure the expand buttons don't drift
-        $(window).on('resize', () => {
-            $(".dataTablesRow").each( function() {
-                $(this).find(".expandButton").css('transform',`translate(-40px,${$(this).height()-33}px)`)
+        jQuery(window).on('resize', () => {
+            jQuery(".dataTablesRow").each( function() {
+                jQuery(this).find(".expandButton").css('transform',`translate(-40px,jQuery{jQuery(this).height()-33}px)`)
             });
         }).resize();
         
         // Insert sort drop down
-        $("#mainDataTable_filter").after(ctri.generateSortDropDown);
-        $(".dataTablesCustom_sort").on('change', ctri.sort).change();
-        $(".dataTablesCustom_order").on('click', ctri.orderToggle);
+        jQuery("#mainDataTable_filter").after(ctri.generateSortDropDown);
+        jQuery(".dataTablesCustom_sort").on('change', ctri.sort).change();
+        jQuery(".dataTablesCustom_order").on('click', ctri.orderToggle);
     },
     
     sort: (e) => {
-        let selection = $(".dataTablesCustom_sort").val();
-        $(".dataTablesCustom_sort").css('color', selection ? 'black' : ctri.disabledTextColor );
-        let index = ctri.dataCols.map(x => x.data).indexOf( $(e.currentTarget).val() );
-        let table = $('#mainDataTable').DataTable();
+        let selection = jQuery(".dataTablesCustom_sort").val();
+        jQuery(".dataTablesCustom_sort").css('color', selection ? 'black' : ctri.disabledTextColor );
+        let index = ctri.dataCols.map(x => x.data).indexOf( jQuery(e.currentTarget).val() );
+        let table = jQuery('#mainDataTable').DataTable();
         table.order( [ index > -1 ? index : 0, 'asc' ] ).draw();
     },
     
     orderToggle: () => {
         ctri.order = ctri.order == "asc" ? "desc" : "asc";
-        let table = $('#mainDataTable').DataTable();
+        let table = jQuery('#mainDataTable').DataTable();
         table.order( [ table.order()[0][0], ctri.order ] ).draw();
-        $(".dataTablesCustom_order i").removeClass('fa-sort-amount-down fa-sort-amount-up')
-        $(".dataTablesCustom_order i").addClass('fa-sort-amount-' + (ctri.order == "asc" ? 'down' : 'up'))
+        jQuery(".dataTablesCustom_order i").removeClass('fa-sort-amount-down fa-sort-amount-up')
+        jQuery(".dataTablesCustom_order i").addClass('fa-sort-amount-' + (ctri.order == "asc" ? 'down' : 'up'))
     },
     
     generateData: () => {
@@ -123,8 +123,8 @@ let ctri = {
                 authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim());
             });
 			authors = authors.filter(n=>n);
-            let link = el.link ? `<a href="${el.link}">[${el.link_text||ctri.defaultLinkText}]</a>` : "";
-            data.push($.extend({
+            let link = el.link ? `<a href="jQuery{el.link}">[jQuery{el.link_text||ctri.defaultLinkText}]</a>` : "";
+            data.push(jQuery.extend({
                 'display': `
                     <div class="container">
                       <div class="row">
@@ -132,23 +132,23 @@ let ctri = {
                           <div class="container">
                             <div class="row row-title">
                               <div class="col-12">
-                                  ${el.title}
+                                  jQuery{el.title}
                               </div>
                             </div>
                             <div class="row">
                               <div class="col-12">
-                                  ${el.journal}
+                                  jQuery{el.journal}
                               </div>
                             </div>
                             <div class="row">
                               <div class="col-12">
-                                  ${authors.join(', ')}
+                                  jQuery{authors.join(', ')}
                               </div>
                             </div>
                           </div>
                         </div>
                         <div class="col-3 text-end mt-1">
-                            ${link}
+                            jQuery{link}
                         </div>
                       </div>
                     </div>
@@ -169,35 +169,35 @@ let ctri = {
 		if( data.date ) {
 			let [m,d,y] = data.date.split('/');
 			year = y;
-			let tmp = new Date(`${y}-${m}-${d}`);
+			let tmp = new Date(`jQuery{y}-jQuery{m}-jQuery{d}`);
 			date = tmp.toLocaleString('default', { year:'numeric', month: 'long', day:"numeric" });
 			date = m == "1" && d == "1" ? "" : date;
 		}		
-		year = year ? `(${year})` : "";
-		let journal = data.journal ? ` ${data.journal}. ` : "";
-		let volume = data.volume ? `Vol. ${data.volume}, ` : "";
-		let page = data.page ? `: ${data.page}.` : ".";
-		let issue = data.issue ? `No. ${data.issue}` : "";
-		let topic = data.topic ? `${data.topic}. ` : "";
+		year = year ? `(jQuery{year})` : "";
+		let journal = data.journal ? ` jQuery{data.journal}. ` : "";
+		let volume = data.volume ? `Vol. jQuery{data.volume}, ` : "";
+		let page = data.page ? `: jQuery{data.page}.` : ".";
+		let issue = data.issue ? `No. jQuery{data.issue}` : "";
+		let topic = data.topic ? `jQuery{data.topic}. ` : "";
 		let apa = ""
 		if ( journal ) {
-			apa = `${authors.join(', ')} ${year} ${data.title}.${journal}${volume}${issue}${page}`;
+			apa = `jQuery{authors.join(', ')} jQuery{year} jQuery{data.title}.jQuery{journal}jQuery{volume}jQuery{issue}jQuery{page}`;
 		} else {
 			// Non Journal, online should have full date
-			apa = `${authors.join(', ')}.${data.title}.${topic}Online ${date}.`;
+			apa = `jQuery{authors.join(', ')}.jQuery{data.title}.jQuery{topic}Online jQuery{date}.`;
 		}
         apa = apa.trim().replaceAll("  "," ").replaceAll(". .",".").replaceAll(", .",".");
 		
 		return `
-		<b>Authors:</b> ${authors.join(', ')}<br>
-		<b>Paper Title:</b> ${data.title}<br>
-		<b>Topic:</b> ${data.topic}<br>
-		<b>Journal:</b> ${data.journal||"N/A"}<br>
-		<b>Volume:</b> ${data.volume||"N/A"}<br>
-		<b>Issue:</b> ${data.issue||"N/A"}<br>
-		<b>Pages:</b> ${data.page||"N/A"}<br>
+		<b>Authors:</b> jQuery{authors.join(', ')}<br>
+		<b>Paper Title:</b> jQuery{data.title}<br>
+		<b>Topic:</b> jQuery{data.topic}<br>
+		<b>Journal:</b> jQuery{data.journal||"N/A"}<br>
+		<b>Volume:</b> jQuery{data.volume||"N/A"}<br>
+		<b>Issue:</b> jQuery{data.issue||"N/A"}<br>
+		<b>Pages:</b> jQuery{data.page||"N/A"}<br>
 		<b>APA:</b><br>
-		${apa}
+		jQuery{apa}
 		`;
     },
     
@@ -209,15 +209,14 @@ let ctri = {
         let html = "<option value=''>Sort by...</option>";
         ctri.dataCols.forEach( (el) => {
             if ( !el.visible ) {
-                html = `${html}<option value="${el.data}">${el.title}</option>`;
+                html = `jQuery{html}<option value="jQuery{el.data}">jQuery{el.title}</option>`;
             }
         });
         return `
             <a class="dataTablesCustom_order">
                 <i class="fas fa-sort-amount-down fa-fw"></i>
             </a>
-            <select class="dataTablesCustom_sort">${html}</select>`;
+            <select class="dataTablesCustom_sort">jQuery{html}</select>`;
     }
 };
-window.jQuery = window.$ = jQuery;
-$(document).ready(ctri.init);
+jQuery(document).ready(ctri.init);
