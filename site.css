@@ -12,20 +12,12 @@
     border-radius: 5px;
 }
 
-.dataTablesRow {
-
-}
-
 .dataTablesRow .container, .dataTableChild  .container {
     font-family: "Verlag";
 }
 
 .dataTableChild .slider{
     display: none;
-}
-
-.dataTablesDisplayCol{
-
 }
 
 .dataTables_paginate a {
