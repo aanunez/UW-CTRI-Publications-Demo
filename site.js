@@ -89,7 +89,7 @@ let ctri = {
         // On resize we need to be sure the expand buttons don't drift
         jQuery(window).on('resize', () => {
             jQuery(".dataTablesRow").each( function() {
-                jQuery(this).find(".expandButton").css('transform',`translate(-40px,jQuery{jQuery(this).height()-33}px)`)
+                jQuery(this).find(".expandButton").css('transform',`translate(-40px,${jQuery(this).height()-33}px)`)
             });
         }).resize();
         
@@ -123,7 +123,7 @@ let ctri = {
                 authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim());
             });
 			authors = authors.filter(n=>n);
-            let link = el.link ? `<a href="jQuery{el.link}">[jQuery{el.link_text||ctri.defaultLinkText}]</a>` : "";
+            let link = el.link ? `<a href="${el.link}">[${el.link_text||ctri.defaultLinkText}]</a>` : "";
             data.push(jQuery.extend({
                 'display': `
                     <div class="container">
@@ -132,23 +132,23 @@ let ctri = {
                           <div class="container">
                             <div class="row row-title">
                               <div class="col-12">
-                                  jQuery{el.title}
+                                  ${el.title}
                               </div>
                             </div>
                             <div class="row">
                               <div class="col-12">
-                                  jQuery{el.journal}
+                                  ${el.journal}
                               </div>
                             </div>
                             <div class="row">
                               <div class="col-12">
-                                  jQuery{authors.join(', ')}
+                                  ${authors.join(', ')}
                               </div>
                             </div>
                           </div>
                         </div>
                         <div class="col-3 text-end mt-1">
-                            jQuery{link}
+                            ${link}
                         </div>
                       </div>
                     </div>
@@ -169,35 +169,35 @@ let ctri = {
 		if( data.date ) {
 			let [m,d,y] = data.date.split('/');
 			year = y;
-			let tmp = new Date(`jQuery{y}-jQuery{m}-jQuery{d}`);
+			let tmp = new Date(`${y}-${m}-${d}`);
 			date = tmp.toLocaleString('default', { year:'numeric', month: 'long', day:"numeric" });
 			date = m == "1" && d == "1" ? "" : date;
 		}		
-		year = year ? `(jQuery{year})` : "";
-		let journal = data.journal ? ` jQuery{data.journal}. ` : "";
-		let volume = data.volume ? `Vol. jQuery{data.volume}, ` : "";
-		let page = data.page ? `: jQuery{data.page}.` : ".";
-		let issue = data.issue ? `No. jQuery{data.issue}` : "";
-		let topic = data.topic ? `jQuery{data.topic}. ` : "";
+		year = year ? `(${year})` : "";
+		let journal = data.journal ? ` ${data.journal}. ` : "";
+		let volume = data.volume ? `Vol. ${data.volume}, ` : "";
+		let page = data.page ? `: ${data.page}.` : ".";
+		let issue = data.issue ? `No. ${data.issue}` : "";
+		let topic = data.topic ? `${data.topic}. ` : "";
 		let apa = ""
 		if ( journal ) {
-			apa = `jQuery{authors.join(', ')} jQuery{year} jQuery{data.title}.jQuery{journal}jQuery{volume}jQuery{issue}jQuery{page}`;
+			apa = `${authors.join(', ')} ${year} ${data.title}.${journal}${volume}${issue}${page}`;
 		} else {
 			// Non Journal, online should have full date
-			apa = `jQuery{authors.join(', ')}.jQuery{data.title}.jQuery{topic}Online jQuery{date}.`;
+			apa = `${authors.join(', ')}.${data.title}.${topic}Online ${date}.`;
 		}
         apa = apa.trim().replaceAll("  "," ").replaceAll(". .",".").replaceAll(", .",".");
 		
 		return `
-		<b>Authors:</b> jQuery{authors.join(', ')}<br>
-		<b>Paper Title:</b> jQuery{data.title}<br>
-		<b>Topic:</b> jQuery{data.topic}<br>
-		<b>Journal:</b> jQuery{data.journal||"N/A"}<br>
-		<b>Volume:</b> jQuery{data.volume||"N/A"}<br>
-		<b>Issue:</b> jQuery{data.issue||"N/A"}<br>
-		<b>Pages:</b> jQuery{data.page||"N/A"}<br>
+		<b>Authors:</b> ${authors.join(', ')}<br>
+		<b>Paper Title:</b> ${data.title}<br>
+		<b>Topic:</b> ${data.topic}<br>
+		<b>Journal:</b> ${data.journal||"N/A"}<br>
+		<b>Volume:</b> ${data.volume||"N/A"}<br>
+		<b>Issue:</b> ${data.issue||"N/A"}<br>
+		<b>Pages:</b> ${data.page||"N/A"}<br>
 		<b>APA:</b><br>
-		jQuery{apa}
+		${apa}
 		`;
     },
     
@@ -209,14 +209,14 @@ let ctri = {
         let html = "<option value=''>Sort by...</option>";
         ctri.dataCols.forEach( (el) => {
             if ( !el.visible ) {
-                html = `jQuery{html}<option value="jQuery{el.data}">jQuery{el.title}</option>`;
+                html = `${html}<option value="${el.data}">${el.title}</option>`;
             }
         });
         return `
             <a class="dataTablesCustom_order">
                 <i class="fas fa-sort-amount-down fa-fw"></i>
             </a>
-            <select class="dataTablesCustom_sort">jQuery{html}</select>`;
+            <select class="dataTablesCustom_sort">${html}</select>`;
     }
 };
 jQuery(document).ready(ctri.init);
