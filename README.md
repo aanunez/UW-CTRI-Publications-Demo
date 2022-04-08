@@ -11,7 +11,6 @@ The [site was taken live](https://ctri.wisc.edu/researchers/uw-ctri-research-pap
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://uwctri.github.io/Publications-Demo/site.js"></script>
-<script src="https://uwctri.github.io/Publications-Demo/pubList.js"></script>
 <script>
 (function(){
     jQuery("main p br").remove()
@@ -22,4 +21,5 @@ The [site was taken live](https://ctri.wisc.edu/researchers/uw-ctri-research-pap
     document.getElementsByTagName('HEAD')[0].appendChild(link); 
 })();
 </script>
+<table id="mainDataTable"></table>
 ```
