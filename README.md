@@ -7,7 +7,7 @@ Pretty table for a new publications page. [Site here](https://uwctri.github.io/P
 The [site was taken live](https://ctri.wisc.edu/researchers/uw-ctri-research-papers/) by inserting the below into WiscWeb. Data is pulled as a CSV from a published [google sheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vT6OITFMbQ5y4dDwRdcPZCoMY6Kp2lGyBZb8kS8hKVCyIq6ItYBXQR-rUByrClzUwEFum7FPCd-L0ya/pub?gid=1937609001&single=true&output=csv).
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/csvtojson@2.0.10/browser/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/csvtojson@2.0.10/browser/csvtojson.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
