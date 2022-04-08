@@ -76,11 +76,19 @@ let ctri = {
 			    }
 				ctri.data.push(obj);
 			}
+			ctri.refresh();
+		});
+	},
+	
+	refresh: () => {
+		try {
 			let table = jQuery('#mainDataTable').DataTable();
 			table.clear();
 			table.rows.add(ctri.generateTableStruct());
 			table.draw();
-		});
+		} catch(e) {
+			setTimeout(ctri.refresh, 200);
+		}
 	},
 
     init: () => {
