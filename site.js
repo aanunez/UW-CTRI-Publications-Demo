@@ -42,7 +42,7 @@ let ctri = {
         },
         {
             title: "Year",
-            data: "date",
+            data: "date_of_publication",
             render: (data, type, row, meta) => {
                 return data.split('-')[0];
             },
