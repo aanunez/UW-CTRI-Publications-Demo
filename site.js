@@ -50,8 +50,8 @@ let ctri = {
     ],
 	
 	loadData: async () => {
-		fetch(ctri.dataLink).then(csv => {
-			let array = csv.toString().split("\n");
+		fetch(ctri.dataLink).then(response => {
+			let array = response.text().toString().split("\n");
 			let headers = array[0].split(", ");
 			for (let i = 1; i < array.length - 1; i++) {
 				let obj = {};
