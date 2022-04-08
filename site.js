@@ -61,12 +61,12 @@ let ctri = {
 	
 	csv2json: (csvString) => {
 		let json = [];
-		let csvArray = csvString.split("\n");
-
+		let csvArray = csvString.split("\n").map(item => item.trim());
+		
 		// Remove the column names from csvArray into csvColumns.
 		// Also replace single quote with double quote (JSON needs double).
 		let csvColumns = JSON.parse("[" + csvArray.shift().replace(/'/g, '"') + "]");
-
+		
 		csvArray.forEach( (rowString) => {
 			let csvRow = rowString.split(",");
 			
