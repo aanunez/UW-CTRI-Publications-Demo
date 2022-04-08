@@ -61,7 +61,7 @@ let ctri = {
 				if ( !jQuery(".expandButton").length ) {
 					jQuery(".dataTablesRow").append(ctri.generateExpandButton());
 				}
-				jQuery(window).resize();
+				jQuery(window).trigger("resize");
 			},
             language: {
                 "zeroRecords": "No matching journal entries",
