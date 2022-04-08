@@ -4,6 +4,7 @@ let ctri = {
     order: 'asc',
 	defaultLinkText: "Full Text",
 	data: [],
+	table: null,
     dataLink: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT6OITFMbQ5y4dDwRdcPZCoMY6Kp2lGyBZb8kS8hKVCyIq6ItYBXQR-rUByrClzUwEFum7FPCd-L0ya/pub?gid=1937609001&single=true&output=csv',
     
     dataCols: [
@@ -53,37 +54,42 @@ let ctri = {
 		fetch(ctri.dataLink).then(response => {
 			return response.text();
 		}).then(csv => {
-			let array = csv.split("\n");
-			let headers = array[0].split(",").map(item => item.trim());
-			for (let i = 1; i < array.length - 1; i++) {
-				let obj = {};
-				let str = array[i];
-				let s = '';
-				let flag = 0
-			    for (let ch of str) {
-				    if (ch === '"' && flag === 0) {
-				        flag = 1;
-				    }
-					else if (ch === '"' && flag == 1) flag = 0;
-					if (ch === ', ' && flag === 0) ch = '|';
-					if (ch !== '"') s += ch;
-				}
-			    let properties = s.split(",").map(item => item.trim());
-			    for (let j in headers) {
-				    obj[headers[j]] = properties[j];
-			    }
-				ctri.data.push(obj);
-			}
+			ctri.data = ctri.csv2json(csv);
 			ctri.refresh();
 		});
 	},
 	
+	csv2json: (csvString) => {
+		let json = [];
+		let csvArray = csvString.split("\n");
+
+		// Remove the column names from csvArray into csvColumns.
+		// Also replace single quote with double quote (JSON needs double).
+		let csvColumns = JSON
+				.parse("[" + csvArray.shift().replace(/'/g, '"') + "]");
+
+		csvArray.forEach(function(csvRowString) {
+			let csvRow = csvRowString.split(",");
+			
+			// Here we work on a single row.
+			// Create an object with all of the csvColumns as keys.
+			jsonRow = new Object();
+			for ( let colNum = 0; colNum < csvRow.length; colNum++) {
+				// Remove beginning and ending quotes since stringify will add them.
+				let colData = csvRow[colNum].replace(/^['"]|['"]$/g, "");
+				jsonRow[csvColumns[colNum]] = colData;
+			}
+			json.push(jsonRow);
+		});
+
+		return json;
+	},
+	
 	refresh: () => {
 		try {
-			let table = jQuery('#mainDataTable').DataTable();
-			table.clear();
-			table.rows.add(ctri.generateTableStruct());
-			table.draw();
+			ctri.table.clear();
+			ctri.table.rows.add(ctri.generateTableStruct());
+			ctri.table.draw();
 		} catch(e) {
 			setTimeout(ctri.refresh, 200);
 		}
@@ -111,21 +117,21 @@ let ctri = {
                 "search": ""
             }
         });
+		ctri.table = jQuery('#mainDataTable').DataTable();
         
         // Set place holder on search 
         jQuery("input.form-control").prop('placeholder','Search journal entries');
         
         // Setup expand buttons
         jQuery('#mainDataTable tbody').on('click', '.expandButton', (e) => {
-            let jQuerytr = jQuery(e.currentTarget).parent();
-            let table = jQuery('#mainDataTable').DataTable();
-            let row = table.row(jQuerytr);
+            let $tr = jQuery(e.currentTarget).parent();
+            let row = ctri.table.row($tr);
             if (row.child.isShown()) {
 				row.child.hide();
-				jQuerytr.removeClass('shown');
+				$tr.removeClass('shown');
             } else {
                 row.child( ctri.generateHTMLforChild(row.data()), 'dataTableChild').show();
-                jQuerytr.addClass('shown');
+                $tr.addClass('shown');
             }
         });
         
@@ -147,13 +153,13 @@ let ctri = {
         jQuery(".dataTablesCustom_sort").css('color', selection ? 'black' : ctri.disabledTextColor );
         let index = ctri.dataCols.map(x => x.data).indexOf( jQuery(e.currentTarget).val() );
         let table = jQuery('#mainDataTable').DataTable();
-        table.order( [ index > -1 ? index : 0, 'asc' ] ).draw();
+        ctri.table.order( [ index > -1 ? index : 0, 'asc' ] ).draw();
     },
     
     orderToggle: () => {
         ctri.order = ctri.order == "asc" ? "desc" : "asc";
         let table = jQuery('#mainDataTable').DataTable();
-        table.order( [ table.order()[0][0], ctri.order ] ).draw();
+        ctri.table.order( [ ctri.table.order()[0][0], ctri.order ] ).draw();
         jQuery(".dataTablesCustom_order i").removeClass('fa-sort-amount-down fa-sort-amount-up')
         jQuery(".dataTablesCustom_order i").addClass('fa-sort-amount-' + (ctri.order == "asc" ? 'down' : 'up'))
     },
