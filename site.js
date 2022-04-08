@@ -91,11 +91,11 @@ let ctri = {
             jQuery(".dataTablesRow").each( function() {
                 jQuery(this).find(".expandButton").css('transform',`translate(-40px,${jQuery(this).height()-33}px)`)
             });
-        }).resize();
+        }).trigger("resize");
         
         // Insert sort drop down
         jQuery("#mainDataTable_filter").after(ctri.generateSortDropDown);
-        jQuery(".dataTablesCustom_sort").on('change', ctri.sort).change();
+        jQuery(".dataTablesCustom_sort").on('change', ctri.sort).trigger("change");
         jQuery(".dataTablesCustom_order").on('click', ctri.orderToggle);
     },
     
