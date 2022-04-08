@@ -64,23 +64,28 @@ let ctri = {
 		let csvArray = csvString.split("\n");
 		
 		// Remove the column names from csvArray into csvColumns.
-		// Also replace single quote with double quote (JSON needs double).
-		let x = csvArray.shift().replace(/'/g, '"');
-		console.log(x);
-		let csvColumns = JSON.parse("[" + x + "]");
+		let csvColumns = csvArray.shift().split(',');
 		
 		csvArray.forEach( (rowString) => {
 			let csvRow = rowString.split(",");
 			
 			// Here we work on a single row.
 			// Create an object with all of the csvColumns as keys.
-			let jsonRow = new Object();
+			let row = new Object();
 			for ( let colNum = 0; colNum < csvRow.length; colNum++) {
 				// Remove beginning and ending quotes since stringify will add them.
 				let colData = csvRow[colNum].replace(/^['"]|['"]$/g, "");
-				jsonRow[csvColumns[colNum]] = colData;
+				row[csvColumns[colNum]] = colData;
 			}
-			json.push(jsonRow);
+			
+			// Special check for our data format
+			let author = [row['first_name'],row['middle_name'],row['last_name']];
+			if (row['title'] != "") {
+				row['author'] = [author];
+				json.push(row);
+			} else {
+				json[json.length-1].author.push(author);
+			}
 		});
 
 		return json;
@@ -173,7 +178,7 @@ let ctri = {
                 authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim());
             });
 			authors = authors.filter(n=>n);
-            let link = el.link ? `<a href="${el.link}">[${el.link_text||ctri.defaultLinkText}]</a>` : "";
+            let link = el.link ? `<a href="${el.url}">[${el.url_text||ctri.defaultLinkText}]</a>` : "";
             data.push(jQuery.extend({
                 'display': `
                     <div class="container">
@@ -216,8 +221,8 @@ let ctri = {
 		authors = authors.filter(n=>n);
 		let date = "";
 		let year = "";
-		if( data.date ) {
-			let [m,d,y] = data.date.split('/');
+		if( data.date_of_publication ) {
+			let [m,d,y] = data.date_of_publication.split('/');
 			year = y;
 			let tmp = new Date(`${y}-${m}-${d}`);
 			date = tmp.toLocaleString('default', { year:'numeric', month: 'long', day:"numeric" });
