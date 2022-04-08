@@ -65,15 +65,14 @@ let ctri = {
 
 		// Remove the column names from csvArray into csvColumns.
 		// Also replace single quote with double quote (JSON needs double).
-		let csvColumns = JSON
-				.parse("[" + csvArray.shift().replace(/'/g, '"') + "]");
+		let csvColumns = JSON.parse("[" + csvArray.shift().replace(/'/g, '"') + "]");
 
-		csvArray.forEach(function(csvRowString) {
-			let csvRow = csvRowString.split(",");
+		csvArray.forEach( (rowString) => {
+			let csvRow = rowString.split(",");
 			
 			// Here we work on a single row.
 			// Create an object with all of the csvColumns as keys.
-			jsonRow = new Object();
+			let jsonRow = new Object();
 			for ( let colNum = 0; colNum < csvRow.length; colNum++) {
 				// Remove beginning and ending quotes since stringify will add them.
 				let colData = csvRow[colNum].replace(/^['"]|['"]$/g, "");
