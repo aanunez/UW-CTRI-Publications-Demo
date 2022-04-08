@@ -3,8 +3,8 @@ let ctri = {
     disabledTextColor: '#6c757d',
     order: 'asc',
 	defaultLinkText: "Full Text",
-    
-    //data: [  ], Loaded in pubList.js
+	data: [],
+    dataLink: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT6OITFMbQ5y4dDwRdcPZCoMY6Kp2lGyBZb8kS8hKVCyIq6ItYBXQR-rUByrClzUwEFum7FPCd-L0ya/pub?gid=1937609001&single=true&output=csv',
     
     dataCols: [
         {
@@ -48,13 +48,50 @@ let ctri = {
             visible: false
         }
     ],
+	
+	loadData: async () => {
+		fetch(dataLink).then(csv => {
+			let array = csv.toString().split("\n");
+			let headers = array[0].split(", ");
+			for (let i = 1; i < array.length - 1; i++) {
+				let obj = {};
+				let str = array[i];
+				let s = '';
+				let flag = 0
+			    for (let ch of str) {
+				    if (ch === '"' && flag === 0) {
+				        flag = 1;
+				    }
+					else if (ch === '"' && flag == 1) flag = 0;
+					if (ch === ', ' && flag === 0) ch = '|';
+					if (ch !== '"') s += ch;
+				}
+			    let properties = s.split("|");
+			    for (let j in headers) {
+				    if (properties[j].includes(", ")) {
+				        obj[headers[j]] = properties[j]
+					      .split(", ").map(item => item.trim());
+				    }
+				    else obj[headers[j]] = properties[j];
+			    }
+				ctri.data.push(obj);
+			}
+			let table = jQuery('#mainDataTable').DataTable();
+			table.clear();
+			table.rows.add(ctri.generateTableStruct());
+			table.draw();
+		});
+	},
 
     init: () => {
-        
-        // Setup Talbe
+		
+		// Grab data from google sheets
+        ctri.data = ctri.loadData();
+		
+        // Setup Table
         jQuery('#mainDataTable').DataTable({
             columns: ctri.dataCols,
-            data: ctri.generateData(),
+            data: ctri.generateTableStruct(),
             createdRow: (row,data,index) => jQuery(row).addClass('dataTablesRow'),
             sDom: 'ftpi',
 			drawCallback: () => {
@@ -115,7 +152,7 @@ let ctri = {
         jQuery(".dataTablesCustom_order i").addClass('fa-sort-amount-' + (ctri.order == "asc" ? 'down' : 'up'))
     },
     
-    generateData: () => {
+    generateTableStruct: () => {
         let data = [];
         ctri.data.forEach( (el) => {
             let authors = [];
