@@ -93,8 +93,8 @@ let ctri = {
 
     init: () => {
 		
-		// Grab data from google sheets
-        ctri.data = ctri.loadData();
+		// Grab data from google sheets, refreshes data when done
+        ctri.loadData();
 		
         // Setup Table
         jQuery('#mainDataTable').DataTable({
