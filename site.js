@@ -68,13 +68,9 @@ let ctri = {
 					if (ch === ', ' && flag === 0) ch = '|';
 					if (ch !== '"') s += ch;
 				}
-			    let properties = s.split("|");
+			    let properties = s.split(",").map(item => item.trim());
 			    for (let j in headers) {
-				    if (properties[j].includes(", ")) {
-				        obj[headers[j]] = properties[j]
-					      .split(",").map(item => item.trim());
-				    }
-				    else obj[headers[j]] = properties[j];
+				    obj[headers[j]] = properties[j];
 			    }
 				ctri.data.push(obj);
 			}
