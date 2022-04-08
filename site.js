@@ -72,7 +72,7 @@ let ctri = {
 			    for (let j in headers) {
 				    if (properties[j].includes(", ")) {
 				        obj[headers[j]] = properties[j]
-					      .split(", ").map(item => item.trim());
+					      .split(",").map(item => item.trim());
 				    }
 				    else obj[headers[j]] = properties[j];
 			    }
