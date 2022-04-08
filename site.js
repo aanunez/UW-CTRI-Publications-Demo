@@ -54,7 +54,7 @@ let ctri = {
 			return response.text();
 		}).then(csv => {
 			let array = csv.split("\n");
-			let headers = array[0].split(",");
+			let headers = array[0].split(",").map(item => item.trim());
 			for (let i = 1; i < array.length - 1; i++) {
 				let obj = {};
 				let str = array[i];
