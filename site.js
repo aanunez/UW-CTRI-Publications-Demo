@@ -97,6 +97,7 @@ let ctri = {
 			ctri.table.rows.add(ctri.generateTableStruct());
 			ctri.table.draw();
 		} catch(e) {
+			console.log(e);
 			setTimeout(ctri.refresh, 200);
 		}
 	},
