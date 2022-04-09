@@ -2,9 +2,9 @@ let ctri = {
 
     disabledTextColor: '#6c757d',
     order: 'asc',
-	defaultLinkText: "Full Text",
-	data: [],
-	table: null,
+    defaultLinkText: "Full Text",
+    data: [],
+    table: null,
     dataLink: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT6OITFMbQ5y4dDwRdcPZCoMY6Kp2lGyBZb8kS8hKVCyIq6ItYBXQR-rUByrClzUwEFum7FPCd-L0ya/pub?gid=1937609001&single=true&output=csv',
     
     dataCols: [
@@ -49,82 +49,83 @@ let ctri = {
             visible: false
         }
     ],
-	
-	loadData: async () => {
-		fetch(ctri.dataLink).then(response => {
-			return response.text();
-		}).then(csv => {
-			ctri.data = ctri.csv2json(csv);
-			ctri.refresh();
-		});
-	},
-	
-	csv2json: (csvString) => {
-		let json = [];
-		let csvArray = csvString.split("\n");
-		
-		// Remove the column names from csvArray into csvColumns.
-		let csvColumns = csvArray.shift().split(',');
-		
-		csvArray.forEach( (rowString) => {
-			let csvRow = rowString.split(",");
-			
-			// Here we work on a single row.
-			// Create an object with all of the csvColumns as keys.
-			let row = new Object();
-			for ( let colNum = 0; colNum < csvRow.length; colNum++) {
-				// Remove beginning and ending quotes since stringify will add them.
-				let colData = csvRow[colNum].replace(/^['"]|['"]$/g, "");
-				row[csvColumns[colNum]] = colData;
-			}
-			
-			// Special check for our data format
-			let author = [row['first_name'],row['middle_name'],row['last_name']];
-			if (row['title'] != "") {
-				row['author'] = [author];
-				json.push(row);
-			} else {
-				json[json.length-1].author.push(author);
-			}
-		});
+    
+    loadData: async () => {
+        fetch(ctri.dataLink).then(response => {
+            return response.text();
+        }).then(csv => {
+            ctri.data = ctri.csv2json(csv);
+            ctri.refresh();
+        });
+    },
+    
+    csv2json: (csvString) => {
+        let json = [];
+        let csvArray = csvString.split("\n");
+        
+        // Remove the column names from csvArray into csvColumns.
+        let csvColumns = csvArray.shift().split(',');
+        
+        csvArray.forEach( (rowString) => {
+			// Regex split the string to ignore commas in quotes
+            let csvRow = rowString.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
 
-		return json;
-	},
-	
-	refresh: () => {
-		try {
-			ctri.table.clear();
-			ctri.table.rows.add(ctri.generateTableStruct());
-			ctri.table.draw();
-		} catch(e) {
-			console.log(e);
-			setTimeout(ctri.refresh, 200);
-		}
-	},
+            // Here we work on a single row.
+            // Create an object with all of the csvColumns as keys.
+            let row = new Object();
+            for ( let colNum = 0; colNum < csvRow.length; colNum++) {
+                // Remove beginning and ending quotes since stringify will add them.
+                let colData = csvRow[colNum].replace(/^['"]|['"]$/g, "");
+                row[csvColumns[colNum]] = colData;
+            }
+            
+            // Special check for our data format
+            let author = [row['first_name'],row['middle_name'],row['last_name']];
+            if (row['title'] != "") {
+                row['author'] = [author];
+                json.push(row);
+            } else {
+                json[json.length-1].author.push(author);
+            }
+        });
+
+        return json;
+    },
+    
+    refresh: () => {
+        try {
+            ctri.table.clear();
+            ctri.table.rows.add(ctri.generateTableStruct());
+            ctri.table.draw();
+        } catch(e) {
+            console.log(e);
+            setTimeout(ctri.refresh, 200);
+        }
+    },
 
     init: () => {
-		
-		// Grab data from google sheets, refreshes data when done
+        
+        // Grab data from google sheets, refreshes data when done
         ctri.loadData();
-		
+        
         // Setup Table
         jQuery('#mainDataTable').DataTable({
             columns: ctri.dataCols,
             data: ctri.generateTableStruct(),
             createdRow: (row,data,index) => jQuery(row).addClass('dataTablesRow'),
             sDom: 'ftpi',
-			drawCallback: () => {
-				if ( !jQuery(".expandButton").length ) {
-					jQuery(".dataTablesRow").append(ctri.generateExpandButton());
-				}
-				jQuery(window).trigger("resize");
-			},
+            drawCallback: () => {
+                if ( !jQuery(".expandButton").length ) {
+                    jQuery(".dataTablesRow").append(ctri.generateExpandButton());
+                }
+                jQuery(window).trigger("resize");
+            },
             language: {
                 "zeroRecords": "No matching journal entries",
                 "search": ""
             }
         });
-		ctri.table = jQuery('#mainDataTable').DataTable();
+        ctri.table = jQuery('#mainDataTable').DataTable();
         
         // Set place holder on search 
         jQuery("input.form-control").prop('placeholder','Search journal entries');
@@ -134,8 +135,8 @@ let ctri = {
             let $tr = jQuery(e.currentTarget).parent();
             let row = ctri.table.row($tr);
             if (row.child.isShown()) {
-				row.child.hide();
-				$tr.removeClass('shown');
+                row.child.hide();
+                $tr.removeClass('shown');
             } else {
                 row.child( ctri.generateHTMLforChild(row.data()), 'dataTableChild').show();
                 $tr.addClass('shown');
@@ -178,7 +179,7 @@ let ctri = {
             el.author.forEach( (el) => {
                 authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim());
             });
-			authors = authors.filter(n=>n);
+            authors = authors.filter(n=>n);
             let link = el.link ? `<a href="${el.url}">[${el.url_text||ctri.defaultLinkText}]</a>` : "";
             data.push(jQuery.extend({
                 'display': `
@@ -215,46 +216,46 @@ let ctri = {
     },
 
     generateHTMLforChild: (data) => {
-		let authors = [];
-		data.author.forEach( (el) => {
-			authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim());
-		});
-		authors = authors.filter(n=>n);
-		let date = "";
-		let year = "";
-		if( data.date_of_publication ) {
-			let [m,d,y] = data.date_of_publication.split('/');
-			year = y;
-			let tmp = new Date(`${y}-${m}-${d}`);
-			date = tmp.toLocaleString('default', { year:'numeric', month: 'long', day:"numeric" });
-			date = m == "1" && d == "1" ? "" : date;
-		}		
-		year = year ? `(${year})` : "";
-		let journal = data.journal ? ` ${data.journal}. ` : "";
-		let volume = data.volume ? `Vol. ${data.volume}, ` : "";
-		let page = data.page ? `: ${data.page}.` : ".";
-		let issue = data.issue ? `No. ${data.issue}` : "";
-		let topic = data.topic ? `${data.topic}. ` : "";
-		let apa = ""
-		if ( journal ) {
-			apa = `${authors.join(', ')} ${year} ${data.title}.${journal}${volume}${issue}${page}`;
-		} else {
-			// Non Journal, online should have full date
-			apa = `${authors.join(', ')}.${data.title}.${topic}Online ${date}.`;
-		}
+        let authors = [];
+        data.author.forEach( (el) => {
+            authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim());
+        });
+        authors = authors.filter(n=>n);
+        let date = "";
+        let year = "";
+        if( data.date_of_publication ) {
+            let [m,d,y] = data.date_of_publication.split('/');
+            year = y;
+            let tmp = new Date(`${y}-${m}-${d}`);
+            date = tmp.toLocaleString('default', { year:'numeric', month: 'long', day:"numeric" });
+            date = m == "1" && d == "1" ? "" : date;
+        }        
+        year = year ? `(${year})` : "";
+        let journal = data.journal ? ` ${data.journal}. ` : "";
+        let volume = data.volume ? `Vol. ${data.volume}, ` : "";
+        let page = data.page ? `: ${data.page}.` : ".";
+        let issue = data.issue ? `No. ${data.issue}` : "";
+        let topic = data.topic ? `${data.topic}. ` : "";
+        let apa = ""
+        if ( journal ) {
+            apa = `${authors.join(', ')} ${year} ${data.title}.${journal}${volume}${issue}${page}`;
+        } else {
+            // Non Journal, online should have full date
+            apa = `${authors.join(', ')}.${data.title}.${topic}Online ${date}.`;
+        }
         apa = apa.trim().replaceAll("  "," ").replaceAll(". .",".").replaceAll(", .",".");
-		
-		return `
-		<b>Authors:</b> ${authors.join(', ')}<br>
-		<b>Paper Title:</b> ${data.title}<br>
-		<b>Topic:</b> ${data.topic}<br>
-		<b>Journal:</b> ${data.journal||"N/A"}<br>
-		<b>Volume:</b> ${data.volume||"N/A"}<br>
-		<b>Issue:</b> ${data.issue||"N/A"}<br>
-		<b>Pages:</b> ${data.page||"N/A"}<br>
-		<b>APA:</b><br>
-		${apa}
-		`;
+        
+        return `
+        <b>Authors:</b> ${authors.join(', ')}<br>
+        <b>Paper Title:</b> ${data.title}<br>
+        <b>Topic:</b> ${data.topic}<br>
+        <b>Journal:</b> ${data.journal||"N/A"}<br>
+        <b>Volume:</b> ${data.volume||"N/A"}<br>
+        <b>Issue:</b> ${data.issue||"N/A"}<br>
+        <b>Pages:</b> ${data.page||"N/A"}<br>
+        <b>APA:</b><br>
+        ${apa}
+        `;
     },
     
     generateExpandButton: () => {
