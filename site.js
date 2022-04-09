@@ -184,7 +184,7 @@ let ctri = {
                 authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim());
             });
             authors = authors.filter(n=>n);
-            let link = el.link ? `<a href="${el.url}">[${el.url_text||ctri.defaultLinkText}]</a>` : "";
+            let link = el.url ? `<a href="${el.url}">[${el.url_text||ctri.defaultLinkText}]</a>` : "";
             data.push(jQuery.extend({
                 'display': `
                     <div class="container">
