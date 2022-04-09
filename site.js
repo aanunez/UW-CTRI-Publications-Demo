@@ -68,7 +68,11 @@ let ctri = {
         
         csvArray.forEach( (rowString) => {
 			// Regex split the string to ignore commas in quotes
-            let csvRow = rowString.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+            let csvRow = rowString
+				.replace(/(,,)/g,',"",')
+				.replace(/(^,)/g,'"",')
+				.replace(/(,$)/g,',""')
+				.replace(/(,,)/g,',"",').match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
 
             // Here we work on a single row.
             // Create an object with all of the csvColumns as keys.
