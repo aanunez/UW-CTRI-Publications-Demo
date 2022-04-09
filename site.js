@@ -72,7 +72,7 @@ let ctri = {
 				.replace(/(,,)/g,',"",')
 				.replace(/(^,)/g,'"",')
 				.replace(/(,$)/g,',""')
-				.replace(/(,,)/g,',"",').match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+				.replace(/(,,)/g,',"",').match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
 
             // Here we work on a single row.
             // Create an object with all of the csvColumns as keys.
