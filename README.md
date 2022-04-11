@@ -13,7 +13,7 @@ The [site was taken live](https://ctri.wisc.edu/researchers/uw-ctri-research-pap
 <script src="https://uwctri.github.io/Publications-Demo/site.js"></script>
 <script>
 (function(){
-    jQuery("main p br").remove()
+    jQuery("main p br").remove();
     var link = document.createElement('link'); 
     link.rel = 'stylesheet'; 
     link.type = 'text/css';
