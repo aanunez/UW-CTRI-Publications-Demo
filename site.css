@@ -92,6 +92,10 @@
     cursor: pointer;
 }
 
+.dataTablesRow a {
+    color: grey;
+}
+
 .gg-file-document {
     box-sizing: border-box;
     position: relative;
