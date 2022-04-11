@@ -96,6 +96,10 @@
     color: grey;
 }
 
+.pr25 {
+    padding-right: 0.25rem;   
+}
+
 .gg-file-document {
     box-sizing: border-box;
     position: relative;
