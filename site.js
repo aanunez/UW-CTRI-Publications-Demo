@@ -141,9 +141,11 @@ let ctri = {
             let row = ctri.table.row($tr);
             if (row.child.isShown()) {
                 row.child.hide();
+		$tr.find('.expandButton').text('+');
                 $tr.removeClass('shown');
             } else {
                 row.child( ctri.generateHTMLforChild(row.data()), 'dataTableChild').show();
+		$tr.find('.expandButton').text('-');
                 $tr.addClass('shown');
             }
         });
