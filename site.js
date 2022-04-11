@@ -126,6 +126,7 @@ let ctri = {
             },
             language: {
                 "zeroRecords": "No matching journal entries",
+		"emptyTable": "Loading...",
                 "search": ""
             }
         });
