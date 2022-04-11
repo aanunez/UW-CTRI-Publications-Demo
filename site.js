@@ -192,7 +192,7 @@ let ctri = {
                 'display': `
                     <div class="container m-0">
                       <div class="row">
-                        <div class="col-9">
+                        <div class="col-10">
                           <div class="container">
                             <div class="row row-title">
                               <div class="col-12">
@@ -211,7 +211,7 @@ let ctri = {
                             </div>
                           </div>
                         </div>
-                        <div class="col-3 mt-1 pr25">
+                        <div class="col-2 mt-1 pr25">
                             ${link}
                         </div>
                       </div>
