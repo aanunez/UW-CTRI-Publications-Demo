@@ -251,15 +251,14 @@ let ctri = {
         apa = apa.trim().replaceAll("  "," ").replaceAll(". .",".").replaceAll(", .",".");
         
         return `
-        <b>Authors:</b> ${authors.join(', ')}<br>
-        <b>Paper Title:</b> ${data.title}<br>
-        <b>Topic:</b> ${data.topic}<br>
-        <b>Journal:</b> ${data.journal||"N/A"}<br>
-        <b>Volume:</b> ${data.volume||"N/A"}<br>
-        <b>Issue:</b> ${data.issue||"N/A"}<br>
-        <b>Pages:</b> ${data.page||"N/A"}<br>
-        <b>APA:</b><br>
-        ${apa}
+        <div><b>Authors:</b> ${authors.join(', ')}</div><br>
+        <div><b>Paper Title:</b> ${data.title}</div><br>
+        <div><b>Topic:</b> ${data.topic}</div><br>
+        <div><b>Journal:</b> ${data.journal||"N/A"}</div><br>
+        <div><b>Volume:</b> ${data.volume||"N/A"}</div><br>
+        <div><b>Issue:</b> ${data.issue||"N/A"}</div><br>
+        <div><b>Pages:</b> ${data.page||"N/A"}</div><br>
+        <div><b>APA:</b>${apa}</div>
         `;
     },
     
