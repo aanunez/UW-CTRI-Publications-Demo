@@ -16,10 +16,6 @@
     font-family: "Verlag";
 }
 
-.dataTableChild .slider{
-    display: none;
-}
-
 .dataTables_paginate a {
     text-decoration: none!important;
     font-family: "Verlag";
