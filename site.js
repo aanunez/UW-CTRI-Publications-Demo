@@ -211,7 +211,7 @@ let ctri = {
                             </div>
                           </div>
                         </div>
-                        <div class="col-3 mt-1" style="padding-right:0.25rem;>
+                        <div class="col-3 mt-1 pr25">
                             ${link}
                         </div>
                       </div>
