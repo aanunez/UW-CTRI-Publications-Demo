@@ -16,6 +16,11 @@
     margin: 0.25rem;   
 }
 
+.dataTables_paginate a {
+    text-decoration: none!important;
+    font-family: "Verlag";
+}
+
 .dataTablesCustom_sort {
     width: 220px;
     float: right;
