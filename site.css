@@ -12,13 +12,8 @@
     border-radius: 5px;
 }
 
-.dataTablesRow .container, .dataTableChild  .container {
-    font-family: "Verlag";
-}
-
-.dataTables_paginate a {
-    text-decoration: none!important;
-    font-family: "Verlag";
+.dataTableChild div {
+    margin: 0.25rem;   
 }
 
 .dataTablesCustom_sort {
