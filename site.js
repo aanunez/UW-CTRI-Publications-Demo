@@ -188,7 +188,7 @@ let ctri = {
             let link = el.url ? `<a href="${el.url}">[${el.url_text||ctri.defaultLinkText}]</a>` : "";
             data.push(jQuery.extend({
                 'display': `
-                    <div class="container">
+                    <div class="container m-0">
                       <div class="row">
                         <div class="col-9">
                           <div class="container">
