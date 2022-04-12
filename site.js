@@ -174,7 +174,7 @@ let ctri = {
                 authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim());
             });
             authors = authors.filter(n=>n);
-            let link = el.url ? `<a href="${el.url}" style="float: inline-end;"><i class="fa-light fa-file-lines"></i></a>` : "";
+            let link = el.url ? `<a href="${el.url}"><i class="fa-regular fa-file-lines"></i></a>` : "";
             data.push(jQuery.extend({
                 'display': `
                     <div class="container m-0">
@@ -261,7 +261,7 @@ let ctri = {
         });
         return `
             <a class="dataTablesCustom_order">
-                <i class="fa-regular fa-arrow-down-short-wide"></i>
+                <i class="fa-solid fa-arrow-down-short-wide"></i>
             </a>
             <select class="dataTablesCustom_sort">${html}</select>`;
     }
