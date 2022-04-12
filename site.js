@@ -41,10 +41,11 @@ let ctri = {
             visible: false
         },
         {
-            title: "Year",
+            title: "Date of Publication",
             data: "date_of_publication",
             render: (data, type, row, meta) => {
-                return data.split('-')[0];
+				let [m,d,y] = data.split('/');
+                return `${y}${m}${d}`;
             },
             visible: false
         }
@@ -181,6 +182,10 @@ let ctri = {
                       <div class="row">
                         <div class="col-10">
                           <div class="container">
+						    <div class="row">
+                              <div class="col-12 sortingValue">
+                              </div>
+                            </div>
                             <div class="row row-title">
                               <div class="col-12">
                                   ${el.title}
@@ -242,6 +247,7 @@ let ctri = {
         
         return `
         <div><b>Authors:</b> ${authors.join(', ')}</div>
+		<div><b>Publication Date:</b> ${data.date_of_publication}</div>
         <div><b>Paper Title:</b> ${data.title}</div>
         <div><b>Topic:</b> ${data.topic}</div>
         <div><b>Journal:</b> ${data.journal||"N/A"}</div>
