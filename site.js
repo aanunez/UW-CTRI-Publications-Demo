@@ -119,9 +119,9 @@ let ctri = {
             data: ctri.generateTableStruct(),
             createdRow: (row,data,index) => jQuery(row).addClass('dataTablesRow'),
             sDom: 'ftpi',
-			drawCallback: () => {
-				jQuery(".dataTablesCustom_sort").trigger("change");
-			},
+            drawCallback: () => {
+                ctri.displaySortingValue();
+            },
             language: {
                 "zeroRecords": "No matching journal entries",
                 "emptyTable": "Loading...",
@@ -158,8 +158,12 @@ let ctri = {
         let selection = jQuery(".dataTablesCustom_sort").val();
         jQuery(".dataTablesCustom_sort").css('color', selection ? 'black' : ctri.disabledTextColor );
         let index = ctri.dataCols.map(x => x.data).indexOf( jQuery(e.currentTarget).val() );
-        let table = jQuery('#mainDataTable').DataTable();
         ctri.table.order( [ index > -1 ? index : 0, 'asc' ] ).draw();
+        ctri.displaySortingValue();
+    },
+    
+    displaySortingValue: () => {
+        let selection = jQuery(".dataTablesCustom_sort").val();
         jQuery(".sortingValue").text("");
         if ( ["","title","journal","author"].includes(selection) ) {
             return;
