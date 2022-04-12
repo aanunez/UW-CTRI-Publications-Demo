@@ -114,15 +114,13 @@ let ctri = {
 
     init: () => {
         
-        // Grab data from google sheets, refreshes data when done
-        ctri.loadData();
-        
         // Setup Table
-        jQuery('#mainDataTable').DataTable({
+        ctri.table = jQuery('#mainDataTable').DataTable({
             columns: ctri.dataCols,
-            data: ctri.generateTableStruct(),
+            data: [],
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]]
             createdRow: (row,data,index) => jQuery(row).addClass('dataTablesRow'),
-            Dom: 'lftpi',
+            dom: 'lftpi',
             drawCallback: () => {
                 ctri.displaySortingValue();
             },
@@ -132,32 +130,33 @@ let ctri = {
                 "search": ""
             }
         });
-        ctri.table = jQuery('#mainDataTable').DataTable();
         
-        // Set place holder on search 
+        // Grab data from google sheets, refreshes data when done
+        ctri.loadData();
+
+        // Setup buttons, placeholders, and styles
+        jQuery('#mainDataTable tbody').on('click', '.expandButton', ctri.expand);
         jQuery("input.form-control").prop('placeholder','Search journal entries');
-        
-        // Setup expand buttons
-        jQuery('#mainDataTable tbody').on('click', '.expandButton', (e) => {
-            let $tr = jQuery(e.currentTarget).closest('tr');
-            let row = ctri.table.row($tr);
-            if (row.child.isShown()) {
-                row.child.hide();
-                $tr.find('.expandButton').text('+');
-                $tr.removeClass('shown');
-            } else {
-                row.child( ctri.generateHTMLforChild(row.data()), 'dataTableChild').show();
-                $tr.find('.expandButton').text('-');
-                $tr.addClass('shown');
-            }
-        });
-        
-        // Insert sort drop down
+        jQuery("[name=mainDataTable_length]").removeClass("form-select form-select-sm").addClass("dataTablesCustom_length");
         jQuery("#mainDataTable_filter").after(ctri.generateSortDropDown);
         jQuery(".dataTablesCustom_sort").on('change', ctri.sort).trigger("change");
         jQuery(".dataTablesCustom_order").on('click', ctri.orderToggle);
     },
     
+    expand: (e) => {
+        let $tr = jQuery(e.currentTarget).closest('tr');
+        let row = ctri.table.row($tr);
+        if (row.child.isShown()) {
+            row.child.hide();
+            $tr.find('.expandButton').text('+');
+            $tr.removeClass('shown');
+        } else {
+            row.child( ctri.generateHTMLforChild(row.data()), 'dataTableChild').show();
+            $tr.find('.expandButton').text('-');
+            $tr.addClass('shown');
+        }
+    },
+        
     sort: (e) => {
         let selection = jQuery(".dataTablesCustom_sort").val();
         jQuery(".dataTablesCustom_sort").css('color', selection ? 'black' : ctri.disabledTextColor );
