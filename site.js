@@ -118,7 +118,7 @@ let ctri = {
         ctri.table = jQuery('#mainDataTable').DataTable({
             columns: ctri.dataCols,
             data: [],
-            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
             createdRow: (row,data,index) => jQuery(row).addClass('dataTablesRow'),
             dom: 'lftpi',
             drawCallback: () => {
