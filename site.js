@@ -56,7 +56,7 @@ let ctri = {
             return response.text();
         }).then(csv => {
             ctri.data = ctri.csv2json(csv);
-            ctri.refresh();
+            ctri.refresh(0);
         });
     },
     
@@ -97,14 +97,18 @@ let ctri = {
         return json;
     },
     
-    refresh: () => {
+    refresh: (attempt) => {
+        if ( attempt > 10 ) {
+            console.log("Unable to load data, possible format issue.");
+            return;
+        }
         try {
             ctri.table.clear();
             ctri.table.rows.add(ctri.generateTableStruct());
             ctri.table.draw();
         } catch(e) {
             console.log(e);
-            setTimeout(ctri.refresh, 200);
+            setTimeout(ctri.refresh, 200, attempt+1);
         }
     },
 
@@ -118,7 +122,7 @@ let ctri = {
             columns: ctri.dataCols,
             data: ctri.generateTableStruct(),
             createdRow: (row,data,index) => jQuery(row).addClass('dataTablesRow'),
-            sDom: 'ftpi',
+            Dom: 'lftpi',
             drawCallback: () => {
                 ctri.displaySortingValue();
             },
