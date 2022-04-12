@@ -162,8 +162,8 @@ let ctri = {
         ctri.order = ctri.order == "asc" ? "desc" : "asc";
         let table = jQuery('#mainDataTable').DataTable();
         ctri.table.order( [ ctri.table.order()[0][0], ctri.order ] ).draw();
-        jQuery(".dataTablesCustom_order i").removeClass('fa-sort-amount-down fa-sort-amount-up')
-        jQuery(".dataTablesCustom_order i").addClass('fa-sort-amount-' + (ctri.order == "asc" ? 'down' : 'up'))
+        jQuery(".dataTablesCustom_order i").removeClass('fa-arrow-down-short-wide fa-arrow-up-short-wide')
+        jQuery(".dataTablesCustom_order i").addClass(`fa-arrow-${ctri.order == "asc" ? 'down' : 'up'}-short-wide`)
     },
     
     generateTableStruct: () => {
@@ -174,7 +174,7 @@ let ctri = {
                 authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim());
             });
             authors = authors.filter(n=>n);
-            let link = el.url ? `<a href="${el.url}" style="float: inline-end;"><i class="gg-file-document"></i></a>` : "";
+            let link = el.url ? `<a href="${el.url}" style="float: inline-end;"><i class="fa-light fa-file-lines"></i></a>` : "";
             data.push(jQuery.extend({
                 'display': `
                     <div class="container m-0">
@@ -261,7 +261,7 @@ let ctri = {
         });
         return `
             <a class="dataTablesCustom_order">
-                <i class="fas fa-sort-amount-down fa-fw"></i>
+                <i class="fa-regular fa-arrow-down-short-wide"></i>
             </a>
             <select class="dataTablesCustom_sort">${html}</select>`;
     }
