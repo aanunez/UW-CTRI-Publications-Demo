@@ -44,7 +44,7 @@ let ctri = {
             title: "Date of Publication",
             data: "date_of_publication",
             render: (data, type, row, meta) => {
-				let [m,d,y] = data.split('/');
+                let [m,d,y] = data.split('/');
                 return `${y}${m}${d}`;
             },
             visible: false
@@ -68,12 +68,12 @@ let ctri = {
         let csvColumns = csvArray.shift().split(',');
         
         csvArray.forEach( (rowString) => {
-			// Regex split the string to ignore commas in quotes
+            // Regex split the string to ignore commas in quotes
             let csvRow = rowString
-				.replace(/(,,)/g,',"",')
-				.replace(/(^,)/g,'"",')
-				.replace(/(,$)/g,',""')
-				.replace(/(,,)/g,',"",').match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+                .replace(/(,,)/g,',"",')
+                .replace(/(^,)/g,'"",')
+                .replace(/(,$)/g,',""')
+                .replace(/(,,)/g,',"",').match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
 
             // Here we work on a single row.
             // Create an object with all of the csvColumns as keys.
@@ -119,6 +119,9 @@ let ctri = {
             data: ctri.generateTableStruct(),
             createdRow: (row,data,index) => jQuery(row).addClass('dataTablesRow'),
             sDom: 'ftpi',
+			drawCallback: () => {
+				jQuery(".dataTablesCustom_sort").trigger("change");
+			},
             language: {
                 "zeroRecords": "No matching journal entries",
                 "emptyTable": "Loading...",
@@ -136,11 +139,11 @@ let ctri = {
             let row = ctri.table.row($tr);
             if (row.child.isShown()) {
                 row.child.hide();
-		$tr.find('.expandButton').text('+');
+                $tr.find('.expandButton').text('+');
                 $tr.removeClass('shown');
             } else {
                 row.child( ctri.generateHTMLforChild(row.data()), 'dataTableChild').show();
-		$tr.find('.expandButton').text('-');
+                $tr.find('.expandButton').text('-');
                 $tr.addClass('shown');
             }
         });
@@ -157,14 +160,14 @@ let ctri = {
         let index = ctri.dataCols.map(x => x.data).indexOf( jQuery(e.currentTarget).val() );
         let table = jQuery('#mainDataTable').DataTable();
         ctri.table.order( [ index > -1 ? index : 0, 'asc' ] ).draw();
-		jQuery(".sortingValue").text("");
-		if ( ["","title","journal","author"].includes(selection) ) {
-			return;
-		}
-		jQuery(".sortingValue").each( (_,el) => {
-			let data = ctri.table.row(jQuery(el).closest('tr')).data();
-			jQuery(el).text(data[selection]);
-		});
+        jQuery(".sortingValue").text("");
+        if ( ["","title","journal","author"].includes(selection) ) {
+            return;
+        }
+        jQuery(".sortingValue").each( (_,el) => {
+            let data = ctri.table.row(jQuery(el).closest('tr')).data();
+            jQuery(el).text(data[selection]);
+        });
     },
     
     orderToggle: () => {
@@ -190,7 +193,7 @@ let ctri = {
                       <div class="row">
                         <div class="col-10">
                           <div class="container">
-						    <div class="row">
+                            <div class="row">
                               <div class="col-12 sortingValue">
                               </div>
                             </div>
@@ -255,7 +258,7 @@ let ctri = {
         
         return `
         <div><b>Authors:</b> ${authors.join(', ')}</div>
-		<div><b>Publication Date:</b> ${data.date_of_publication}</div>
+        <div><b>Publication Date:</b> ${data.date_of_publication}</div>
         <div><b>Paper Title:</b> ${data.title}</div>
         <div><b>Topic:</b> ${data.topic}</div>
         <div><b>Journal:</b> ${data.journal||"N/A"}</div>
