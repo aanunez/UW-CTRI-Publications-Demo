@@ -99,3 +99,8 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.rightCol a, 
+.rightCol div {
+    align-self: flex-end;
+}
