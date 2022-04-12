@@ -122,7 +122,7 @@ let ctri = {
                 if ( !jQuery(".expandButton").length ) {
                     jQuery(".dataTablesRow").append(ctri.generateExpandButton());
                 }
-                jQuery(window).trigger("resize");
+                //jQuery(window).trigger("resize");
             },
             language: {
                 "zeroRecords": "No matching journal entries",
@@ -151,11 +151,11 @@ let ctri = {
         });
         
         // On resize we need to be sure the expand buttons don't drift
-        jQuery(window).on('resize', () => {
-            jQuery(".dataTablesRow").each( function() {
-                jQuery(this).find(".expandButton").css('transform',`translate(-40px,${jQuery(this).height()-33}px)`)
-            });
-        }).trigger("resize");
+        //jQuery(window).on('resize', () => {
+        //    jQuery(".dataTablesRow").each( function() {
+        //        jQuery(this).find(".expandButton").css('transform',`translate(-40px,${jQuery(this).height()-33}px)`)
+        //    });
+        //}).trigger("resize");
         
         // Insert sort drop down
         jQuery("#mainDataTable_filter").after(ctri.generateSortDropDown);
