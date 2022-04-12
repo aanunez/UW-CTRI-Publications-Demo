@@ -137,7 +137,7 @@ let ctri = {
         // Setup buttons, placeholders, and styles
         jQuery('#mainDataTable tbody').on('click', '.expandButton', ctri.expand);
         jQuery("input.form-control").prop('placeholder','Search journal entries');
-        jQuery("[name=mainDataTable_length]").removeClass("form-select form-select-sm").addClass("dataTablesCustom_length");
+        jQuery(".dataTables_length select").removeClass("form-select form-select-sm").addClass("dataTablesCustom_length");
         jQuery("#mainDataTable_filter").after(ctri.generateSortDropDown);
         jQuery(".dataTablesCustom_sort").on('change', ctri.sort).trigger("change");
         jQuery(".dataTablesCustom_order").on('click', ctri.orderToggle);
