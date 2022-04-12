@@ -100,11 +100,11 @@
     justify-content: flex-end;
 }
 
-.rightCol .fileLink {
+.rightCol .expandButton {
     align-self: flex-end;
 }
 
-.rightCol .expandButton {
+.rightCol .fileLink {
     align-self: flex-end;
     font-size: x-large;
     margin-right: 1rem;
