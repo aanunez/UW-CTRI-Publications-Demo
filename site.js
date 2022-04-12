@@ -157,6 +157,14 @@ let ctri = {
         let index = ctri.dataCols.map(x => x.data).indexOf( jQuery(e.currentTarget).val() );
         let table = jQuery('#mainDataTable').DataTable();
         ctri.table.order( [ index > -1 ? index : 0, 'asc' ] ).draw();
+		jQuery(".sortingValue").text("");
+		if ( ["","title","journal","author"].includes(selection) ) {
+			return;
+		}
+		jQuery(".sortingValue").each( (_,el) => {
+			let data = ctri.table.row(jQuery(el).closest('tr')).data();
+			jQuery(el).text(data[selection]);
+		});
     },
     
     orderToggle: () => {
