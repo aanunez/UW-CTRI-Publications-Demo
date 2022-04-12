@@ -118,11 +118,6 @@ let ctri = {
             data: ctri.generateTableStruct(),
             createdRow: (row,data,index) => jQuery(row).addClass('dataTablesRow'),
             sDom: 'ftpi',
-            drawCallback: () => {
-                if ( !jQuery(".expandButton").length ) {
-                    jQuery(".dataTablesRow").append(ctri.generateExpandButton());
-                }
-            },
             language: {
                 "zeroRecords": "No matching journal entries",
                 "emptyTable": "Loading...",
@@ -205,6 +200,7 @@ let ctri = {
                         </div>
                         <div class="col-2 rightCol">
                             ${link}
+							<div class="expandButton">+</div>
                         </div>
                       </div>
                     </div>
@@ -254,10 +250,6 @@ let ctri = {
         <div><b>Pages:</b> ${data.page||"N/A"}</div>
         <div><b>APA:</b> ${apa}</div>
         `;
-    },
-    
-    generateExpandButton: () => {
-        return '<div class="expandButton">+</div>'
     },
     
     generateSortDropDown: () => {
