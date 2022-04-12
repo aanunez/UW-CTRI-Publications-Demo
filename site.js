@@ -122,11 +122,10 @@ let ctri = {
                 if ( !jQuery(".expandButton").length ) {
                     jQuery(".dataTablesRow").append(ctri.generateExpandButton());
                 }
-                //jQuery(window).trigger("resize");
             },
             language: {
                 "zeroRecords": "No matching journal entries",
-		"emptyTable": "Loading...",
+                "emptyTable": "Loading...",
                 "search": ""
             }
         });
@@ -149,13 +148,6 @@ let ctri = {
                 $tr.addClass('shown');
             }
         });
-        
-        // On resize we need to be sure the expand buttons don't drift
-        //jQuery(window).on('resize', () => {
-        //    jQuery(".dataTablesRow").each( function() {
-        //        jQuery(this).find(".expandButton").css('transform',`translate(-40px,${jQuery(this).height()-33}px)`)
-        //    });
-        //}).trigger("resize");
         
         // Insert sort drop down
         jQuery("#mainDataTable_filter").after(ctri.generateSortDropDown);
@@ -211,7 +203,7 @@ let ctri = {
                             </div>
                           </div>
                         </div>
-                        <div class="col-2 mt-1 pr25">
+                        <div class="col-2 rightCol">
                             ${link}
                         </div>
                       </div>
