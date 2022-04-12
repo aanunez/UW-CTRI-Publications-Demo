@@ -79,9 +79,7 @@
 }
 
 .expandButton {
-    position: absolute;
     width: 1.5em;
-    transform: translate(-40px,90px);
     background-color: gray;
     border-radius: 100%;
     height: 1.5em;
@@ -96,8 +94,9 @@
     color: grey;
 }
 
-.pr25 {
-    padding-right: 0.25rem;   
+.rightCol {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .gg-file-document {
