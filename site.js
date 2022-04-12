@@ -131,7 +131,7 @@ let ctri = {
         
         // Setup expand buttons
         jQuery('#mainDataTable tbody').on('click', '.expandButton', (e) => {
-            let $tr = jQuery(e.currentTarget).parent();
+            let $tr = jQuery(e.currentTarget).parent().parent();
             let row = ctri.table.row($tr);
             if (row.child.isShown()) {
                 row.child.hide();
