@@ -148,11 +148,11 @@ let ctri = {
         let row = ctri.table.row($tr);
         if (row.child.isShown()) {
             row.child.hide();
-            $tr.find('.expandButton').text('+');
+            $tr.find('.expandButton').removeClass("fa-circle-minus").addClass("fa-circle-plus");
             $tr.removeClass('shown');
         } else {
             row.child( ctri.generateHTMLforChild(row.data()), 'dataTableChild').show();
-            $tr.find('.expandButton').text('-');
+            $tr.find('.expandButton').removeClass("fa-circle-plus").addClass("fa-circle-minus");
             $tr.addClass('shown');
         }
     },
@@ -223,7 +223,7 @@ let ctri = {
                         </div>
                         <div class="col-2 rightCol">
                             ${link}
-                            <div class="expandButton">+</div>
+                            <i class="fa-solid fa-circle-plus expandButton"></i>
                         </div>
                       </div>
                     </div>
