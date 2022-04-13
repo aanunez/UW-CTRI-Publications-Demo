@@ -3,6 +3,7 @@ New searchable publications table for a new publications page. [Demo site here](
 * style.css contains all UW default styling, nothing new
 * site.js holds all of the important stuff
 * The only new tags in the index are the "New CDNs" section and `<table id="mainDataTable"></table>`
+* The `site.less` file can be compiled via `lessc -ru=all site.less -x > site.css`
 
 The [site was taken live](https://ctri.wisc.edu/researchers/uw-ctri-research-papers/) by inserting the below into WiscWeb. Data is pulled as a CSV from a published [google sheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vT6OITFMbQ5y4dDwRdcPZCoMY6Kp2lGyBZb8kS8hKVCyIq6ItYBXQR-rUByrClzUwEFum7FPCd-L0ya/pub?gid=1937609001&single=true&output=csv).
 
