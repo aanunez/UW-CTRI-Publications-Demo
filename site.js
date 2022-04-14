@@ -45,8 +45,9 @@ let ctri = {
             data: "date_of_publication",
             render: (data, type, row, meta) => {
                 if ( type === "sort" ) {
-                    let [m,d,y] = data.split('/');
-                    return `${y}${m.padStart(2,'0')}${d.padStart(2,'0')}`;
+                    let mdy = data.split('/');
+                    let [m,d,y] = mdy;
+                    return mdy.length == 3 ? `${y}${m.padStart(2,'0')}${d.padStart(2,'0')}` : data;
                 }
                 return data;
             },
