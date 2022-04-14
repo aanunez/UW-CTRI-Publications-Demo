@@ -46,7 +46,7 @@ let ctri = {
                 if ( type === "sort" ) {
                     let mdy = data.split('/');
                     let [m,d,y] = mdy;
-                    return mdy.length == 3 ? `${y}${m.padStart(2,'0')}${d.padStart(2,'0')}` : data;
+                    return mdy.length == 3 ? `${y.padStart(4,'0')}${m.padStart(2,'0')}${d.padStart(2,'0')}` : data;
                 }
                 return data;
             },
