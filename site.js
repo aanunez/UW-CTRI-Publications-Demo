@@ -2,7 +2,6 @@ let ctri = {
 
     disabledTextColor: '#6c757d',
     order: 'asc',
-    defaultLinkText: "Full Text",
     data: [],
     table: null,
     dataLink: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT6OITFMbQ5y4dDwRdcPZCoMY6Kp2lGyBZb8kS8hKVCyIq6ItYBXQR-rUByrClzUwEFum7FPCd-L0ya/pub?gid=1937609001&single=true&output=csv',
