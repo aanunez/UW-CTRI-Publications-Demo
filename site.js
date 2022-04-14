@@ -44,8 +44,11 @@ let ctri = {
             title: "Date of Publication",
             data: "date_of_publication",
             render: (data, type, row, meta) => {
-                let [m,d,y] = data.split('/');
-                return `${y}${m}${d}`;
+                if ( type === "sort" ) {
+                    let [m,d,y] = data.split('/');
+                    return `${y}${m.padStart(2,'0')}${d.padStart(2,'0')}`;
+                }
+                return data;
             },
             visible: false
         }
