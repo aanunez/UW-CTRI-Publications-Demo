@@ -146,6 +146,8 @@ let ctri = {
         jQuery(".dataTablesCustom_sort").on('change', ctri.sort).trigger("change");
         jQuery(".dataTablesCustom_order").on('click', ctri.orderToggle);
 		jQuery(".dataTablesCustom_sort").after(ctri.generateTopicsDropDown());
+		jQuery(".dataTablesCustom_topic").on('change', ctri.topicFilterDraw).trigger("change");
+		jQuery.fn.dataTable.ext.search.push(ctri.topicFilter);
     },
     
     expand: (e) => {
@@ -306,6 +308,17 @@ let ctri = {
 		let topics = ctri.data.map(x=>x.topic).filter((v, i, a) => a.indexOf(v) === i);
 		let html = topics.map( topic => `<option>${topic}</option>`).join('');
 		jQuery(".dataTablesCustom_topic").append(html);
+	},
+	
+	topicFilterDraw: () => {
+		let selection = jQuery(".dataTablesCustom_topic").val();
+		jQuery(".dataTablesCustom_topic").css('color', selection ? 'black' : ctri.disabledTextColor );
+		ctri.table.draw();
+	},
+	
+	topicFilter: (settings, data, dataIndex) => {
+		let selection = jQuery(".dataTablesCustom_topic").val();
+		return !selection || data[3] == selection;
 	}
 };
 jQuery(document).ready(ctri.init);
