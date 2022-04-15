@@ -109,6 +109,7 @@ let ctri = {
             ctri.table.clear();
             ctri.table.rows.add(ctri.generateTableStruct());
             ctri.table.draw();
+			ctri.updateTopicDropDown();
         } catch(e) {
             console.log(e);
             setTimeout(ctri.refresh, 200, attempt+1);
@@ -144,6 +145,7 @@ let ctri = {
         jQuery("#mainDataTable_filter").after(ctri.generateSortDropDown);
         jQuery(".dataTablesCustom_sort").on('change', ctri.sort).trigger("change");
         jQuery(".dataTablesCustom_order").on('click', ctri.orderToggle);
+		jQuery(".dataTablesCustom_sort").after(ctri.generateTopicsDropDown());
     },
     
     expand: (e) => {
@@ -291,6 +293,19 @@ let ctri = {
                 <i class="fa-solid fa-arrow-down-short-wide"></i>
             </a>
             <select class="dataTablesCustom_sort">${html}</select>`;
-    }
+    },
+	
+	generateTopicsDropDown: () => {
+        return `
+            <select class="dataTablesCustom_topic">
+				<option value=''>Filter to topic...</option>
+			</select>`;
+	},
+	
+	updateTopicDropDown: () => {
+		let topics = ctri.data.map(x=>x.topic).filter((v, i, a) => a.indexOf(v) === i);
+		let html = topics.map( topic => `<option>${topic}</option>`).join('');
+		jQuery(".dataTablesCustom_topic").append(html);
+	}
 };
 jQuery(document).ready(ctri.init);
