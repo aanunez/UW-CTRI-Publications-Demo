@@ -25,6 +25,7 @@
         color: black;
     }
 
+    .dataTablesCustom_topic, 
     .dataTablesCustom_sort {
         width: 220px;
         float: right;
@@ -36,7 +37,8 @@
         margin: 0 0.25em 0 0.5em;
     }
 
-    .dataTablesCustom_sort option[value=""] {
+    .dataTablesCustom_topic:first-child,
+    .dataTablesCustom_sort:first-child {
         color: #6c757d;
     }
 
@@ -78,6 +80,7 @@
     .dataTables_info,
     .dataTables_filter input,
     .dataTablesCustom_sort,
+    .dataTablesCustom_topic,
     .dataTables_length,
     .dataTables_length label,
     .dataTables_length select {
