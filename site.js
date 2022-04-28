@@ -29,6 +29,9 @@ let ctri = {
         {
             title: "Topic",
             data: "topic",
+			render: (data, type, row, meta) => {
+                return data[0];
+            },
             visible: false
         },
         {
@@ -89,17 +92,17 @@ let ctri = {
             
             // Special check for our data format (more than 1 topic/author)
             let author = [row['first_name'],row['middle_name'],row['last_name']];
-            if (row['title'] != "") {
+            if ( row['title'].length ) {
                 row['author'] = [author];
-		// row['topic'] = [row['topic']]; TODO
+				row['topic'] = [row['topic']];
                 json.push(row);
             } else {
-		if ( author.join('').length ) {
-                    json[json.length-1].author.push(author);
-		}
-		//if ( row['topic'].length ) { TODO
-		//    json[json.length-1].topic.push(row['topic']);
-		//}
+				if ( author.join('').length ) {
+					json[json.length-1].author.push(author);
+				}
+				if ( row['topic'].length ) { 
+					json[json.length-1].topic.push(row['topic']);
+				}
             }
         });
 
@@ -266,13 +269,14 @@ let ctri = {
         let volume = data.volume ? `Vol. ${data.volume}, ` : "";
         let page = data.page ? `: ${data.page}.` : ".";
         let issue = data.issue ? `No. ${data.issue}` : "";
-        let topic = data.topic ? `${data.topic}. ` : "";
+		let primaryTopic = data.topic.length ? `${data.topic[0]}. ` : "";
+        let topics = data.topic.length > 1 ? `${data.topic.join(', ')}. ` : "";
         let apa = ""
         if ( journal ) {
             apa = `${authors.join(', ')} ${year} ${data.title}.${journal}${volume}${issue}${page}`;
         } else {
             // Non Journal, online should have full date
-            apa = `${authors.join(', ')}.${data.title}.${topic}Online ${date}.`;
+            apa = `${authors.join(', ')}.${data.title}.${primaryTopic}Online ${date}.`;
         }
         apa = apa.trim().replaceAll("  "," ").replaceAll(". .",".").replaceAll(", .",".");
         
@@ -280,7 +284,7 @@ let ctri = {
         <div><b>Authors:</b> ${authors.join(', ')}</div>
         <div><b>Publication Date:</b> ${data.date_of_publication}</div>
         <div><b>Paper Title:</b> ${data.title}</div>
-        <div><b>Topic:</b> ${data.topic}</div>
+        <div><b>Topic:</b> ${topics||"N/A"}</div>
         <div><b>Journal:</b> ${data.journal||"N/A"}</div>
         <div><b>Volume:</b> ${data.volume||"N/A"}</div>
         <div><b>Issue:</b> ${data.issue||"N/A"}</div>
@@ -311,7 +315,7 @@ let ctri = {
 	},
 	
 	updateTopicDropDown: () => {
-		let topics = ctri.data.map(x=>x.topic).filter((v, i, a) => a.indexOf(v) === i);
+		let topics = ctri.data.map(x=>x.topic).flat().filter((v, i, a) => a.indexOf(v) === i);
 		let html = topics.map( topic => `<option>${topic}</option>`).join('');
 		jQuery(".dataTablesCustom_topic").append(html);
 	},
