@@ -87,13 +87,19 @@ let ctri = {
                 row[csvColumns[colNum]] = colData;
             }
             
-            // Special check for our data format
+            // Special check for our data format (more than 1 topic/author)
             let author = [row['first_name'],row['middle_name'],row['last_name']];
             if (row['title'] != "") {
                 row['author'] = [author];
+		// row['topic'] = [row['topic']]; TODO
                 json.push(row);
             } else {
-                json[json.length-1].author.push(author);
+		if ( author.join('').length ) {
+                    json[json.length-1].author.push(author);
+		}
+		//if ( row['topic'].length ) { TODO
+		//    json[json.length-1].topic.push(row['topic']);
+		//}
             }
         });
 
