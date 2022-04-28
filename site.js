@@ -84,7 +84,7 @@ let ctri = {
             // Here we work on a single row.
             // Create an object with all of the csvColumns as keys.
             let row = new Object()
-            for ( let colNum = 0 colNum < csvRow.length colNum++) {
+            for ( let colNum = 0; colNum < csvRow.length; colNum++ ) {
                 // Remove beginning and ending quotes since stringify will add them.
                 let colData = csvRow[colNum].replace(/^['"]|['"]$/g, "")
                 row[csvColumns[colNum]] = colData
