@@ -284,7 +284,7 @@ let ctri = {
         <div><b>Authors:</b> ${authors.join(', ')}</div>
         <div><b>Publication Date:</b> ${data.date_of_publication}</div>
         <div><b>Paper Title:</b> ${data.title}</div>
-        <div><b>Topic:</b> ${topics||"N/A"}</div>
+        <div><b>Topics:</b> ${topics||"N/A"}</div>
         <div><b>Journal:</b> ${data.journal||"N/A"}</div>
         <div><b>Volume:</b> ${data.volume||"N/A"}</div>
         <div><b>Issue:</b> ${data.issue||"N/A"}</div>
