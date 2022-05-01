@@ -315,7 +315,7 @@ let ctri = {
 	},
 	
 	updateTopicDropDown: () => {
-		let topics = ctri.data.map(x=>x.topic.trim()).flat().filter((v, i, a) => a.indexOf(v) === i)
+		let topics = ctri.data.map(x=>x.topic?.trim()).flat().filter((v, i, a) => a.indexOf(v) === i)
 		let html = topics.map( topic => `<option>${topic}</option>`).join('')
 		jQuery(".dataTablesCustom_topic").append(html)
 	},
