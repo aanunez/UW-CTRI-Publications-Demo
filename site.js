@@ -5,7 +5,7 @@ let ctri = {
     data: [],
     table: null,
     dataLink: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT6OITFMbQ5y4dDwRdcPZCoMY6Kp2lGyBZb8kS8hKVCyIq6ItYBXQR-rUByrClzUwEFum7FPCd-L0ya/pub?gid=1937609001&single=true&output=csv',
-    
+
     dataCols: [
         {
             title: "display",
@@ -29,7 +29,7 @@ let ctri = {
         {
             title: "Topic",
             data: "topic",
-			render: (data, type, row, meta) => {
+            render: (data, type, row, meta) => {
                 return data.join(', ')
             },
             visible: false
@@ -46,17 +46,17 @@ let ctri = {
             title: "Date of Publication",
             data: "date_of_publication",
             render: (data, type, row, meta) => {
-                if ( type === "sort" ) {
+                if (type === "sort") {
                     let mdy = data.split('/')
-                    let [m,d,y] = mdy
-                    return mdy.length == 3 ? `${y.padStart(4,'0')}${m.padStart(2,'0')}${d.padStart(2,'0')}` : data
+                    let [m, d, y] = mdy
+                    return mdy.length == 3 ? `${y.padStart(4, '0')}${m.padStart(2, '0')}${d.padStart(2, '0')}` : data
                 }
                 return data
             },
             visible: false
         }
     ],
-    
+
     loadData: async () => {
         fetch(ctri.dataLink).then(response => {
             return response.text()
@@ -65,52 +65,52 @@ let ctri = {
             ctri.refresh(0)
         })
     },
-    
+
     csv2json: (csvString) => {
         let json = []
         let csvArray = csvString.split("\n")
-        
+
         // Remove the column names from csvArray into csvColumns.
         let csvColumns = csvArray.shift().split(',')
-        
-        csvArray.forEach( (rowString) => {
+
+        csvArray.forEach((rowString) => {
             // Regex split the string to ignore commas in quotes
             let csvRow = rowString
-                .replace(/(,,)/g,',"",')
-                .replace(/(^,)/g,'"",')
-                .replace(/(,$)/g,',""')
-                .replace(/(,,)/g,',"",').match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)
+                .replace(/(,,)/g, ',"",')
+                .replace(/(^,)/g, '"",')
+                .replace(/(,$)/g, ',""')
+                .replace(/(,,)/g, ',"",').match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)
 
             // Here we work on a single row.
             // Create an object with all of the csvColumns as keys.
             let row = new Object()
-            for ( let colNum = 0; colNum < csvRow.length; colNum++ ) {
+            for (let colNum = 0; colNum < csvRow.length; colNum++) {
                 // Remove beginning and ending quotes since stringify will add them.
                 let colData = csvRow[colNum].replace(/^['"]|['"]$/g, "")
                 row[csvColumns[colNum]] = colData
             }
-            
+
             // Special check for our data format (more than 1 topic/author)
-            let author = [row['first_name'],row['middle_name'],row['last_name']]
-            if ( row['title'].length ) {
+            let author = [row['first_name'], row['middle_name'], row['last_name']]
+            if (row['title'].length) {
                 row['author'] = [author]
-				row['topic'] = [row['topic']]
+                row['topic'] = [row['topic']]
                 json.push(row)
             } else {
-				if ( author.join('').length ) {
-					json[json.length-1].author.push(author)
-				}
-				if ( row['topic'].length ) { 
-					json[json.length-1].topic.push(row['topic'])
-				}
+                if (author.join('').length) {
+                    json[json.length - 1].author.push(author)
+                }
+                if (row['topic'].length) {
+                    json[json.length - 1].topic.push(row['topic'])
+                }
             }
         })
 
         return json
     },
-    
+
     refresh: (attempt) => {
-        if ( attempt > 10 ) {
+        if (attempt > 10) {
             console.log("Unable to load data, possible format issue.")
             return
         }
@@ -118,21 +118,21 @@ let ctri = {
             ctri.table.clear()
             ctri.table.rows.add(ctri.generateTableStruct())
             ctri.table.draw()
-			ctri.updateTopicDropDown()
-        } catch(e) {
+            ctri.updateTopicDropDown()
+        } catch (e) {
             console.log(e)
-            setTimeout(ctri.refresh, 200, attempt+1)
+            setTimeout(ctri.refresh, 200, attempt + 1)
         }
     },
 
     init: () => {
-        
+
         // Setup Table
         ctri.table = jQuery('#mainDataTable').DataTable({
             columns: ctri.dataCols,
             data: [],
             lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-            createdRow: (row,data,index) => jQuery(row).addClass('dataTablesRow'),
+            createdRow: (row, data, index) => jQuery(row).addClass('dataTablesRow'),
             dom: 'lftpi',
             drawCallback: () => {
                 ctri.displaySortingValue()
@@ -143,22 +143,22 @@ let ctri = {
                 "search": ""
             }
         })
-        
+
         // Grab data from google sheets, refreshes data when done
         ctri.loadData()
 
         // Setup buttons, placeholders, and styles
         jQuery('#mainDataTable tbody').on('click', '.expandButton', ctri.expand)
-        jQuery("input.form-control").prop('placeholder','Search journal entries')
+        jQuery("input.form-control").prop('placeholder', 'Search journal entries')
         jQuery(".dataTables_length select").removeClass("form-select form-select-sm").addClass("dataTablesCustom_length")
         jQuery("#mainDataTable_filter").after(ctri.generateSortDropDown)
         jQuery(".dataTablesCustom_sort").on('change', ctri.sort).trigger("change")
         jQuery(".dataTablesCustom_order").on('click', ctri.orderToggle)
-		jQuery(".dataTablesCustom_sort").after(ctri.generateTopicsDropDown())
-		jQuery(".dataTablesCustom_topic").on('change', ctri.topicFilterDraw).trigger("change")
-		jQuery.fn.dataTable.ext.search.push(ctri.topicFilter)
+        jQuery(".dataTablesCustom_sort").after(ctri.generateTopicsDropDown())
+        jQuery(".dataTablesCustom_topic").on('change', ctri.topicFilterDraw).trigger("change")
+        jQuery.fn.dataTable.ext.search.push(ctri.topicFilter)
     },
-    
+
     expand: (e) => {
         let $tr = jQuery(e.currentTarget).closest('tr')
         let row = ctri.table.row($tr)
@@ -167,48 +167,48 @@ let ctri = {
             $tr.find('.expandButton').removeClass("fa-circle-minus").addClass("fa-circle-plus")
             $tr.removeClass('shown')
         } else {
-            row.child( ctri.generateHTMLforChild(row.data()), 'dataTableChild').show()
+            row.child(ctri.generateHTMLforChild(row.data()), 'dataTableChild').show()
             $tr.find('.expandButton').removeClass("fa-circle-plus").addClass("fa-circle-minus")
             $tr.addClass('shown')
         }
     },
-        
+
     sort: (e) => {
         let selection = jQuery(".dataTablesCustom_sort").val()
-        jQuery(".dataTablesCustom_sort").css('color', selection ? 'black' : ctri.disabledTextColor )
-        let index = ctri.dataCols.map(x => x.data).indexOf( jQuery(e.currentTarget).val() )
-        ctri.table.order( [ index > -1 ? index : 0, 'asc' ] ).draw()
+        jQuery(".dataTablesCustom_sort").css('color', selection ? 'black' : ctri.disabledTextColor)
+        let index = ctri.dataCols.map(x => x.data).indexOf(jQuery(e.currentTarget).val())
+        ctri.table.order([index > -1 ? index : 0, 'asc']).draw()
         ctri.displaySortingValue()
     },
-    
+
     displaySortingValue: () => {
         let selection = jQuery(".dataTablesCustom_sort").val()
         jQuery(".sortingValue").text("")
-        if ( ["","title","journal","author"].includes(selection) ) {
+        if (["", "title", "journal", "author"].includes(selection)) {
             return
         }
-        jQuery(".sortingValue").each( (_,el) => {
+        jQuery(".sortingValue").each((_, el) => {
             let data = ctri.table.row(jQuery(el).closest('tr')).data()
             jQuery(el).text(data[selection])
         })
     },
-    
+
     orderToggle: () => {
         ctri.order = ctri.order == "asc" ? "desc" : "asc"
         let table = jQuery('#mainDataTable').DataTable()
-        ctri.table.order( [ ctri.table.order()[0][0], ctri.order ] ).draw()
+        ctri.table.order([ctri.table.order()[0][0], ctri.order]).draw()
         jQuery(".dataTablesCustom_order i").removeClass('fa-arrow-down-short-wide fa-arrow-up-short-wide')
         jQuery(".dataTablesCustom_order i").addClass(`fa-arrow-${ctri.order == "asc" ? 'down' : 'up'}-short-wide`)
     },
-    
+
     generateTableStruct: () => {
         let data = []
-        ctri.data.forEach( (el) => {
+        ctri.data.forEach((el) => {
             let authors = []
-            el.author.forEach( (el) => {
-                authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim())
+            el.author.forEach((el) => {
+                authors.push(typeof el == "string" ? el : ((el[2] || "").trim() + " " + (el[0][0] || "").trim() + (el[1][0] || "").trim()).trim())
             })
-            authors = authors.filter(n=>n)
+            authors = authors.filter(n => n)
             let link = el.url ? `<a href="${el.url}" class="fileLink"><i class="fa-regular fa-file-lines"></i></a>` : ""
             data.push(jQuery.extend({
                 'display': `
@@ -251,52 +251,52 @@ let ctri = {
 
     generateHTMLforChild: (data) => {
         let authors = []
-        data.author.forEach( (el) => {
-            authors.push(typeof el == "string" ? el : ((el[2]||"").trim()+" "+(el[0][0]||"").trim()+(el[1][0]||"").trim()).trim())
+        data.author.forEach((el) => {
+            authors.push(typeof el == "string" ? el : ((el[2] || "").trim() + " " + (el[0][0] || "").trim() + (el[1][0] || "").trim()).trim())
         })
-        authors = authors.filter(n=>n)
+        authors = authors.filter(n => n)
         let date = ""
         let year = ""
-        if( data.date_of_publication ) {
-            let [m,d,y] = data.date_of_publication.split('/')
+        if (data.date_of_publication) {
+            let [m, d, y] = data.date_of_publication.split('/')
             year = y
             let tmp = new Date(`${y}-${m}-${d}`)
-            date = tmp.toLocaleString('default', { year:'numeric', month: 'long', day:"numeric" })
+            date = tmp.toLocaleString('default', { year: 'numeric', month: 'long', day: "numeric" })
             date = m == "1" && d == "1" ? "" : date
-        }        
+        }
         year = year ? `(${year})` : ""
         let journal = data.journal ? ` ${data.journal}. ` : ""
         let volume = data.volume ? `Vol. ${data.volume}, ` : ""
         let page = data.page ? `: ${data.page}.` : "."
         let issue = data.issue ? `No. ${data.issue}` : ""
-		let primaryTopic = data.topic.length ? `${data.topic[0]}. ` : ""
+        let primaryTopic = data.topic.length ? `${data.topic[0]}. ` : ""
         let topics = data.topic.length > 1 ? data.topic.join(', ') : ""
         let apa = ""
-        if ( journal ) {
+        if (journal) {
             apa = `${authors.join(', ')} ${year} ${data.title}.${journal}${volume}${issue}${page}`
         } else {
             // Non Journal, online should have full date
             apa = `${authors.join(', ')}.${data.title}.${primaryTopic}Online ${date}.`
         }
-        apa = apa.trim().replaceAll("  "," ").replaceAll(". .",".").replaceAll(", .",".")
-        
+        apa = apa.trim().replaceAll("  ", " ").replaceAll(". .", ".").replaceAll(", .", ".")
+
         return `
         <div><b>Authors:</b> ${authors.join(', ')}</div>
         <div><b>Publication Date:</b> ${data.date_of_publication}</div>
         <div><b>Paper Title:</b> ${data.title}</div>
-        <div><b>Topics:</b> ${topics||"N/A"}</div>
-        <div><b>Journal:</b> ${data.journal||"N/A"}</div>
-        <div><b>Volume:</b> ${data.volume||"N/A"}</div>
-        <div><b>Issue:</b> ${data.issue||"N/A"}</div>
-        <div><b>Pages:</b> ${data.page||"N/A"}</div>
+        <div><b>Topics:</b> ${topics || "N/A"}</div>
+        <div><b>Journal:</b> ${data.journal || "N/A"}</div>
+        <div><b>Volume:</b> ${data.volume || "N/A"}</div>
+        <div><b>Issue:</b> ${data.issue || "N/A"}</div>
+        <div><b>Pages:</b> ${data.page || "N/A"}</div>
         <div><b>APA:</b> ${apa}</div>
         `
     },
-    
+
     generateSortDropDown: () => {
         let html = "<option value=''>Sort by...</option>"
-        ctri.dataCols.forEach( (el) => {
-            if ( !el.visible ) {
+        ctri.dataCols.forEach((el) => {
+            if (!el.visible) {
                 html = `${html}<option value="${el.data}">${el.title}</option>`
             }
         })
@@ -306,29 +306,29 @@ let ctri = {
             </a>
             <select class="dataTablesCustom_sort">${html}</select>`
     },
-	
-	generateTopicsDropDown: () => {
+
+    generateTopicsDropDown: () => {
         return `
             <select class="dataTablesCustom_topic">
 				<option value=''>Filter to topic...</option>
 			</select>`
-	},
-	
-	updateTopicDropDown: () => {
-		let topics = ctri.data.map(x=>x.topic).flat().filter((v, i, a) => a.indexOf(v) === i).map(x=>x.trim()).sort()
-		let html = topics.map( topic => `<option>${topic}</option>`).join('')
-		jQuery(".dataTablesCustom_topic").append(html)
-	},
-	
-	topicFilterDraw: () => {
-		let selection = jQuery(".dataTablesCustom_topic").val()
-		jQuery(".dataTablesCustom_topic").css('color', selection ? 'black' : ctri.disabledTextColor )
-		ctri.table.draw()
-	},
-	
-	topicFilter: (settings, data, dataIndex) => {
-		let selection = jQuery(".dataTablesCustom_topic").val()
-		return !selection || data[3].includes(selection)
-	}
+    },
+
+    updateTopicDropDown: () => {
+        let topics = ctri.data.map(x => x.topic).flat().filter((v, i, a) => a.indexOf(v) === i).map(x => x.trim()).sort()
+        let html = topics.map(topic => `<option>${topic}</option>`).join('')
+        jQuery(".dataTablesCustom_topic").append(html)
+    },
+
+    topicFilterDraw: () => {
+        let selection = jQuery(".dataTablesCustom_topic").val()
+        jQuery(".dataTablesCustom_topic").css('color', selection ? 'black' : ctri.disabledTextColor)
+        ctri.table.draw()
+    },
+
+    topicFilter: (settings, data, dataIndex) => {
+        let selection = jQuery(".dataTablesCustom_topic").val()
+        return !selection || data[3].includes(selection)
+    }
 }
 jQuery(document).ready(ctri.init)
