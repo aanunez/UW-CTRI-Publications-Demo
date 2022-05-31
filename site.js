@@ -4,7 +4,7 @@ let ctri = {
     order: 'asc',
     data: [],
     table: null,
-    dataLink: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT6OITFMbQ5y4dDwRdcPZCoMY6Kp2lGyBZb8kS8hKVCyIq6ItYBXQR-rUByrClzUwEFum7FPCd-L0ya/pub?gid=1937609001&single=true&output=csv',
+    dataLink: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRfGyGPkZg8sJGuKa3XvAU1Cr7_tf-Wm4JIrKkNsP-tyNa0jowVhayJypx3wYy-ifxQ7CPNjNOKoUPQ/pub?gid=1937609001&single=true&output=csv',
 
     dataCols: [
         {
