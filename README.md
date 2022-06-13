@@ -1,3 +1,8 @@
+
+UW Doit will be stripping script tags in 2023, this page will need to be migrated to a Google Tag Manager before then.
+
+##
+
 New searchable publications table for a new publications page. [Demo site here](https://uwctri.github.io/Publications_Page/)
 
 * style.css contains all UW default styling, nothing new
