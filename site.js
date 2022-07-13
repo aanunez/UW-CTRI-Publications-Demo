@@ -126,6 +126,9 @@ let ctri = {
     },
 
     init: () => {
+	    
+	// Remove loading banner
+	jQuery("#gtmNoLoad").remove()
 
         // Setup Table
         ctri.table = jQuery('#mainDataTable').DataTable({
