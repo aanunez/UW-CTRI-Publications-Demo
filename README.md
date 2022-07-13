@@ -25,7 +25,7 @@ The [site was taken live](https://ctri.wisc.edu/researchers/uw-ctri-research-pap
 **WiscWeb**
 ```
 <table id="mainDataTable"></table>
-<div id="gtmNoLoad"><div class="alert alert-warning text-center" role="alert"><h3>Loading...</h3><span>Not loading? This page uses Google Tag Manager which might be blocked by your Ad Blocker.</span></div></div>
+<div id="gtmNoLoad"><div class="text-center"><h3>Loading...</h3><span>Not loading? This page uses Google Tag Manager which might be blocked by your Ad Blocker.</span></div></div>
 ```
 
 ## 2022 Version
