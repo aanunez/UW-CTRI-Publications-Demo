@@ -270,7 +270,7 @@ let ctri = {
         year = year ? `(${year})` : ""
         let journal = data.journal ? ` ${data.journal}. ` : ""
         let volume = data.volume ? `Vol. ${data.volume}, ` : ""
-        let page = data.page ? `: ${data.page}.` : "."
+        let page = data.pages ? `: ${data.pages}.` : "."
         let issue = data.issue ? `No. ${data.issue}` : ""
         let primaryTopic = data.topic.length ? `${data.topic[0]}. ` : ""
         let topics = data.topic.length > 1 ? data.topic.join(', ') : ""
@@ -291,7 +291,7 @@ let ctri = {
         <div><b>Journal:</b> ${data.journal || "N/A"}</div>
         <div><b>Volume:</b> ${data.volume || "N/A"}</div>
         <div><b>Issue:</b> ${data.issue || "N/A"}</div>
-        <div><b>Pages:</b> ${data.page || "N/A"}</div>
+        <div><b>Pages:</b> ${data.pages || "N/A"}</div>
         <div><b>APA:</b> ${apa}</div>
         `
     },
