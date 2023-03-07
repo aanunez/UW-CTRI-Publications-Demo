@@ -8,7 +8,7 @@ New searchable publications table for a new publications page. [Demo site here](
 
 ## 2023 Version
 
-The [site was taken live](https://ctri.wisc.edu/researchers/uw-ctri-research-papers/) by inserting the below into a new Google Tag Manager tag that triggers on the specific page URL. Data is pulled as a CSV from a published [google sheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vT6OITFMbQ5y4dDwRdcPZCoMY6Kp2lGyBZb8kS8hKVCyIq6ItYBXQR-rUByrClzUwEFum7FPCd-L0ya/pub?gid=1937609001&single=true&output=csv). A small snippet of HTML is still needed in WiscWeb to provide an anchor for the table and display a message if the tag can't be loaded (i.e. Ad Blocker). Migration to GTM is due to UW Doit ending support for js in WiscWeb in early 2023.
+The [site was taken live](https://ctri.wisc.edu/researchers/uw-ctri-research-papers/) by inserting the below into a new Google Tag Manager tag that triggers on the specific page URL. Data is pulled as a CSV from a published [google sheet](https://docs.google.com/spreadsheets/u/6/d/e/2PACX-1vRfGyGPkZg8sJGuKa3XvAU1Cr7_tf-Wm4JIrKkNsP-tyNa0jowVhayJypx3wYy-ifxQ7CPNjNOKoUPQ/pub?gid=1937609001&single=true). A small snippet of HTML is still needed in WiscWeb to provide an anchor for the table and display a message if the tag can't be loaded (i.e. Ad Blocker). Migration to GTM is due to UW Doit ending support for js in WiscWeb in early 2023.
 
 **GTM**
 ```
