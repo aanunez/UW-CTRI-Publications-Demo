@@ -253,6 +253,7 @@ let ctri = {
     },
 
     generateHTMLforChild: (data) => {
+	console.log(data)
         let authors = []
         data.author.forEach((el) => {
             authors.push(typeof el == "string" ? el : ((el[2] || "").trim() + " " + (el[0][0] || "").trim() + (el[1][0] || "").trim()).trim())
