@@ -253,7 +253,6 @@ let ctri = {
     },
 
     generateHTMLforChild: (data) => {
-	console.log(data)
         let authors = []
         data.author.forEach((el) => {
             authors.push(typeof el == "string" ? el : ((el[2] || "").trim() + " " + (el[0][0] || "").trim() + (el[1][0] || "").trim()).trim())
@@ -274,7 +273,7 @@ let ctri = {
         let page = data.pages ? `: ${data.pages}.` : "."
         let issue = data.issue ? `No. ${data.issue}` : ""
         let primaryTopic = data.topic.length ? `${data.topic[0]}. ` : ""
-        let topics = data.topic.length > 1 ? data.topic.join(', ') : ""
+        let topics = data.topic.join(', ')
         let apa = ""
         if (journal) {
             apa = `${authors.join(', ')} ${year} ${data.title}.${journal}${volume}${issue}${page}`
